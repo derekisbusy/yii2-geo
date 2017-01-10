@@ -11,15 +11,17 @@ class m170110_010101_create_geo_state_table extends \yii\db\Migration
         if ($this->db->driverName === 'mysql') {
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
         }
-        
-        if (!in_array(Yii::$app->db->tablePrefix.'geo_state', $tables))  { 
+
+        if (!in_array(Yii::$app->db->tablePrefix.'geo_state', $tables))  {
             $this->createTable('{{%geo_state}}', [
                 'id' => $this->primaryKey(),
                 'state' => $this->string(22)->notNull(),
                 'state_code' => $this->char(2)->notNull(),
             ], $tableOptions);
-            
+
             $this->insertData();
+        } else {
+          echo 'Table `'.Yii::$app->db->tablePrefix.'geo_city` already exists!';
         }
     }
 
@@ -27,7 +29,7 @@ class m170110_010101_create_geo_state_table extends \yii\db\Migration
     {
         $this->dropTable('{{%geo_state}}');
     }
-    
+
     public function insertData()
     {
         $this->insert('{{%geo_state}}',['id'=>'1','state'=>'Alaska','state_code'=>'AK']);

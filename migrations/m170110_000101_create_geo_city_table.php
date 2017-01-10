@@ -11,15 +11,15 @@ class m170110_000101_create_geo_city_table extends \yii\db\Migration
         if ($this->db->driverName === 'mysql') {
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
         }
-        
-        if (!in_array(Yii::$app->db->tablePrefix.'geo_city', $tables))  { 
+
+        if (!in_array(Yii::$app->db->tablePrefix.'geo_city', $tables))  {
             $this->createTable('{{%geo_city}}', [
                 'id' => $this->primaryKey(),
                 'city' => $this->string(50)->notNull(),
                 'state_id' => $this->smallInteger(5)->notNull(),
                 'county_id' => $this->smallInteger(5)->notNull(),
             ], $tableOptions);
-        
+
 
             // State ID
             $this->createIndex(
@@ -56,8 +56,10 @@ class m170110_000101_create_geo_city_table extends \yii\db\Migration
             );
             
             $this->insertData();
+        } else {
+          echo 'Table `'.Yii::$app->db->tablePrefix.'geo_city` already exists!';
         }
-        
+
     }
 
     public function down()
@@ -66,11 +68,11 @@ class m170110_000101_create_geo_city_table extends \yii\db\Migration
         $this->dropTable('{{%geo_city}}');
         $this->execute('SET foreign_key_checks = 1');
     }
-    
+
     public function insertData()
     {
         $this->execute('SET foreign_key_checks = 0');
-        
+
         $this->insert('{{%geo_city}}',['id'=>'1','city'=>'Aaronsburg','state_id'=>'39','county_id'=>'259']);
         $this->insert('{{%geo_city}}',['id'=>'2','city'=>'Abbeville','state_id'=>'2','county_id'=>'927']);
         $this->insert('{{%geo_city}}',['id'=>'3','city'=>'Abbeville','state_id'=>'11','county_id'=>'743']);

@@ -12,14 +12,14 @@ class m170110_010101_create_geo_county_table extends \yii\db\Migration
         if ($this->db->driverName === 'mysql') {
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
         }
-        
-        if (!in_array(Yii::$app->db->tablePrefix.'geo_county', $tables))  { 
+
+        if (!in_array(Yii::$app->db->tablePrefix.'geo_county', $tables))  {
             $this->createTable('{{%geo_county}}', [
                 'id' => $this->primaryKey(),
                 'county' => $this->string(100)->notNull(),
                 'state_id' => $this->smallInteger(5)->notNull(),
             ], $tableOptions);
-        
+
             // State ID
             $this->createIndex(
                 'idx-geo_county-state_id',
@@ -36,8 +36,10 @@ class m170110_010101_create_geo_county_table extends \yii\db\Migration
                 'CASCADE',
                 'CASCADE'
             );
-            
+
             $this->insertData();
+        } else {
+          echo 'Table `'.Yii::$app->db->tablePrefix.'geo_county` already exists!';
         }
     }
 
@@ -47,7 +49,7 @@ class m170110_010101_create_geo_county_table extends \yii\db\Migration
         $this->dropTable('{{%geo_county}}');
         $this->execute('SET foreign_key_checks = 1');
     }
-    
+
     public function insertData()
     {
         $this->insert('{{%geo_county}}',['id'=>'1','county'=>'Suffolk','state_id'=>'35']);

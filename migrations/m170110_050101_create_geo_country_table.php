@@ -11,35 +11,35 @@ class m170110_050101_create_geo_country_table extends \yii\db\Migration
         if ($this->db->driverName === 'mysql') {
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
         }
-        
-        if (!in_array(Yii::$app->db->tablePrefix.'geo_country', $tables))  { 
+
+        if (!in_array(Yii::$app->db->tablePrefix.'geo_country', $tables))  {
             $this->createTable('{{%geo_country}}', [
                 'id' => $this->primaryKey(),
                 'country_code' => $this->string(2)->notNull(),
                 'country' => $this->string(50)->notNull(),
             ], $tableOptions);
-            
-            
+
+
             $this->createIndex(
                 'idx-geo_country-country_code',
                 '{{%contact}}',
                 'country_code',
                 true
             );
-            
+
             $this->createIndex(
                 'idx-geo_country-country',
                 '{{%contact}}',
                 'country',
                 true
             );
-            
+
             $this->insertData();
         } else {
-            echo '\nTable already exists!\n';
+          echo 'Table `'.Yii::$app->db->tablePrefix.'geo_country` already exists!';
         }
-        
-        
+
+
     }
 
     public function down()
@@ -48,7 +48,7 @@ class m170110_050101_create_geo_country_table extends \yii\db\Migration
         $this->dropTable('{{%geo_country}}');
         $this->execute('SET foreign_key_checks = 1');
     }
-    
+
     public function insertData()
     {
         $this->insert('{{%geo_country}}',['id'=>'1','country_code'=>'AF','country'=>'Afghanistan']);
