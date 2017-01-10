@@ -5,17 +5,17 @@ use yii\widgets\DetailView;
 use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $model vendor\derekisbusy\geo\models\GeoCity */
+/* @var $model vendor\derekisbusy\geo\models\GeoCounty */
 
-$this->title = $model->city;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('derekisbusy/geo', 'Geo Cities'), 'url' => ['index']];
+$this->title = $model->county;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('derekisbusy/geo', 'Geo Counties'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="geo-city-view">
+<div class="geo-county-view">
 
     <div class="row">
         <div class="col-sm-9">
-            <h2><?= Yii::t('derekisbusy/geo', 'Geo City').' '. Html::encode($this->title) ?></h2>
+            <h2><?= Yii::t('derekisbusy/geo', 'Geo County').' '. Html::encode($this->title) ?></h2>
         </div>
         <div class="col-sm-3" style="margin-top: 15px">
             
@@ -35,20 +35,43 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php 
     $gridColumn = [
         ['attribute' => 'id', 'visible' => false],
-        'city',
+        'county',
         [
             'attribute' => 'state.id',
             'label' => Yii::t('derekisbusy/geo', 'State'),
-        ],
-        [
-            'attribute' => 'county.id',
-            'label' => Yii::t('derekisbusy/geo', 'County'),
         ],
     ];
     echo DetailView::widget([
         'model' => $model,
         'attributes' => $gridColumn
     ]); 
+?>
+    </div>
+    
+    <div class="row">
+<?php
+if($providerGeoCity->totalCount){
+    $gridColumnGeoCity = [
+        ['class' => 'yii\grid\SerialColumn'],
+            ['attribute' => 'id', 'visible' => false],
+            'city',
+            [
+                'attribute' => 'state.id',
+                'label' => Yii::t('derekisbusy/geo', 'State')
+            ],
+                ];
+    echo Gridview::widget([
+        'dataProvider' => $providerGeoCity,
+        'pjax' => true,
+        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-geo-city']],
+        'panel' => [
+            'type' => GridView::TYPE_PRIMARY,
+            'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode(Yii::t('derekisbusy/geo', 'Geo City')),
+        ],
+        'export' => false,
+        'columns' => $gridColumnGeoCity
+    ]);
+}
 ?>
     </div>
     
@@ -61,15 +84,15 @@ if($providerGeoZip->totalCount){
             'zip',
             'latitude',
             'longitude',
-            [
-                'attribute' => 'county.id',
-                'label' => Yii::t('derekisbusy/geo', 'County')
-            ],
-            [
+                        [
                 'attribute' => 'state.id',
                 'label' => Yii::t('derekisbusy/geo', 'State')
             ],
-                ];
+            [
+                'attribute' => 'city.id',
+                'label' => Yii::t('derekisbusy/geo', 'City')
+            ],
+    ];
     echo Gridview::widget([
         'dataProvider' => $providerGeoZip,
         'pjax' => true,

@@ -5,14 +5,14 @@ use yii\widgets\DetailView;
 use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $model vendor\derekisbusy\geo\models\GeoCity */
+/* @var $model vendor\derekisbusy\geo\models\GeoZip */
 
 ?>
-<div class="geo-city-view">
+<div class="geo-zip-view">
 
     <div class="row">
         <div class="col-sm-9">
-            <h2><?= Html::encode($model->city) ?></h2>
+            <h2><?= Html::encode($model->zip) ?></h2>
         </div>
     </div>
 
@@ -20,14 +20,20 @@ use kartik\grid\GridView;
 <?php 
     $gridColumn = [
         ['attribute' => 'id', 'visible' => false],
-        'city',
+        'zip',
+        'latitude',
+        'longitude',
+        [
+            'attribute' => 'county.id',
+            'label' => Yii::t('derekisbusy/geo', 'County'),
+        ],
         [
             'attribute' => 'state.id',
             'label' => Yii::t('derekisbusy/geo', 'State'),
         ],
         [
-            'attribute' => 'county.id',
-            'label' => Yii::t('derekisbusy/geo', 'County'),
+            'attribute' => 'city.id',
+            'label' => Yii::t('derekisbusy/geo', 'City'),
         ],
     ];
     echo DetailView::widget([
