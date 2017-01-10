@@ -31,4 +31,9 @@ class Module extends \yii\base\Module
             'basePath' => '@vendor/derekisbusy/geo/messages',
         ];
     }
+    
+    public function registerControllerMap()
+    {
+        Yii::$app->controllerMap['migrate-geo']
+    }
 }

@@ -22,6 +22,23 @@ or add
 to the require section of your `composer.json` file.
 
 
+
+### Update database schema
+
+The last thing you need to do is updating your database schema by applying the
+migrations. Make sure that you have properly configured `db` application component
+and run the following command:
+
+```bash
+$ php yii migrate/up --migrationPath=@vendor/dektrium/yii2-user/migrations
+```
+
+ Since there are lots of records in the migrations you may need to temporarily remove the memory limit in your index.php by adding the following. 
+
+```php
+php_ini('memory_limit', '-1');
+```
+
 Usage
 -----
 
