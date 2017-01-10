@@ -1,6 +1,6 @@
 <?php
 
-namespace vendor\derekisbusy\geo\modules\geo;
+namespace derekisbusy\geo\modules\geo;
 
 /**
  * geo module definition class
@@ -10,7 +10,7 @@ class Module extends \yii\base\Module
     /**
      * @inheritdoc
      */
-    public $controllerNamespace = 'vendor\derekisbusy\geo\modules\geo\controllers';
+    public $controllerNamespace = 'derekisbusy\geo\modules\geo\controllers';
 
     /**
      * @inheritdoc
@@ -32,8 +32,4 @@ class Module extends \yii\base\Module
         ];
     }
     
-    public function registerControllerMap()
-    {
-        Yii::$app->controllerMap['migrate-geo']
-    }
 }

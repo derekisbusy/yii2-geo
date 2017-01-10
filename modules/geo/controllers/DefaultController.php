@@ -1,6 +1,6 @@
 <?php
 
-namespace vendor\derekisbusy\geo\modules\geo\controllers;
+namespace derekisbusy\geo\modules\geo\controllers;
 
 use yii\web\Controller;
 
