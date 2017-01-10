@@ -30,7 +30,7 @@ migrations. Make sure that you have properly configured `db` application compone
 and run the following command:
 
 ```bash
-$ php yii migrate/up --migrationPath=@vendor/dektrium/yii2-user/migrations
+$ php yii migrate/up --migrationPath=@vendor/derekisbusy/geo/migrations
 ```
 
  Since there are lots of records in the migrations you may need to temporarily remove the memory limit in your index.php by adding the following. 
