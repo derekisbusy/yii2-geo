@@ -11,14 +11,18 @@ use Yii;
  * @property string $county
  * @property integer $state_id
  *
- * @property \derekisbusy\geo\models\GeoCity[] $geoCities
- * @property \derekisbusy\geo\models\GeoState $state
- * @property \derekisbusy\geo\models\GeoZip[] $geoZips
+ * @property derekisbusy\geo\models\GeoCity[] $geoCities
+ * @property derekisbusy\geo\models\GeoState $state
+ * @property derekisbusy\geo\models\GeoZip[] $geoZips
  */
 class GeoCounty extends \yii\db\ActiveRecord
 {
     use \mootensai\relation\RelationTrait;
 
+    public function __toString() {
+            return $this->county;
+    }
+    
     /**
      * @inheritdoc
      */
@@ -77,10 +81,11 @@ class GeoCounty extends \yii\db\ActiveRecord
     
     /**
      * @inheritdoc
-     * @return \derekisbusy\geo\models\GeoCountyQuery the active query used by this AR class.
+     * @return derekisbusy\geo\models\GeoCountyQuery the active query used by this AR class.
      */
     public static function find()
     {
         return new \derekisbusy\geo\models\GeoCountyQuery(get_called_class());
     }
+    
 }
