@@ -1,14 +1,14 @@
 <?php
 
-namespace vendor\derekisbusy\geo\models;
+namespace derekisbusy\geo\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use vendor\derekisbusy\geo\models\GeoState;
+use derekisbusy\geo\models\GeoState;
 
 /**
- * vendor\derekisbusy\geo\models\GeoStateSearch represents the model behind the search form about `vendor\derekisbusy\geo\models\GeoState`.
+ * derekisbusy\geo\models\GeoStateSearch represents the model behind the search form about `derekisbusy\geo\models\GeoState`.
  */
  class GeoStateSearch extends GeoState
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace vendor\derekisbusy\geo\models;
+namespace derekisbusy\geo\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use vendor\derekisbusy\geo\models\GeoZip;
+use derekisbusy\geo\models\GeoZip;
 
 /**
- * vendor\derekisbusy\geo\models\GeoZipSearch represents the model behind the search form about `vendor\derekisbusy\geo\models\GeoZip`.
+ * derekisbusy\geo\models\GeoZipSearch represents the model behind the search form about `derekisbusy\geo\models\GeoZip`.
  */
  class GeoZipSearch extends GeoZip
 {

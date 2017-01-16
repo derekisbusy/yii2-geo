@@ -1,6 +1,6 @@
 <?php
 
-namespace vendor\derekisbusy\geo\models\base;
+namespace derekisbusy\geo\models\base;
 
 use Yii;
 
@@ -51,10 +51,10 @@ class GeoCountry extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * @return \vendor\derekisbusy\geo\models\GeoCountryQuery the active query used by this AR class.
+     * @return \derekisbusy\geo\models\GeoCountryQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new \vendor\derekisbusy\geo\models\GeoCountryQuery(get_called_class());
+        return new \derekisbusy\geo\models\GeoCountryQuery(get_called_class());
     }
 }

@@ -1,14 +1,14 @@
 <?php
 
-namespace vendor\derekisbusy\geo\models;
+namespace derekisbusy\geo\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use vendor\derekisbusy\geo\models\GeoCounty;
+use derekisbusy\geo\models\GeoCounty;
 
 /**
- * vendor\derekisbusy\geo\models\GeoCountySearch represents the model behind the search form about `vendor\derekisbusy\geo\models\GeoCounty`.
+ * derekisbusy\geo\models\GeoCountySearch represents the model behind the search form about `derekisbusy\geo\models\GeoCounty`.
  */
  class GeoCountySearch extends GeoCounty
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace vendor\derekisbusy\geo\models;
+namespace derekisbusy\geo\models;
 
-use \vendor\derekisbusy\geo\models\base\GeoZip as BaseGeoZip;
+use \derekisbusy\geo\models\base\GeoZip as BaseGeoZip;
 
 /**
  * This is the model class for table "geo_zip".

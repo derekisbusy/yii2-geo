@@ -1,6 +1,6 @@
 <?php
 
-namespace vendor\derekisbusy\geo\models\base;
+namespace derekisbusy\geo\models\base;
 
 use Yii;
 
@@ -11,9 +11,9 @@ use Yii;
  * @property string $state
  * @property string $state_code
  *
- * @property \vendor\derekisbusy\geo\models\GeoCity[] $geoCities
- * @property \vendor\derekisbusy\geo\models\GeoCounty[] $geoCounties
- * @property \vendor\derekisbusy\geo\models\GeoZip[] $geoZips
+ * @property \derekisbusy\geo\models\GeoCity[] $geoCities
+ * @property \derekisbusy\geo\models\GeoCounty[] $geoCounties
+ * @property \derekisbusy\geo\models\GeoZip[] $geoZips
  */
 class GeoState extends \yii\db\ActiveRecord
 {
@@ -57,7 +57,7 @@ class GeoState extends \yii\db\ActiveRecord
      */
     public function getGeoCities()
     {
-        return $this->hasMany(\vendor\derekisbusy\geo\models\GeoCity::className(), ['state_id' => 'id']);
+        return $this->hasMany(\derekisbusy\geo\models\GeoCity::className(), ['state_id' => 'id']);
     }
         
     /**
@@ -65,7 +65,7 @@ class GeoState extends \yii\db\ActiveRecord
      */
     public function getGeoCounties()
     {
-        return $this->hasMany(\vendor\derekisbusy\geo\models\GeoCounty::className(), ['state_id' => 'id']);
+        return $this->hasMany(\derekisbusy\geo\models\GeoCounty::className(), ['state_id' => 'id']);
     }
         
     /**
@@ -73,15 +73,15 @@ class GeoState extends \yii\db\ActiveRecord
      */
     public function getGeoZips()
     {
-        return $this->hasMany(\vendor\derekisbusy\geo\models\GeoZip::className(), ['state_id' => 'id']);
+        return $this->hasMany(\derekisbusy\geo\models\GeoZip::className(), ['state_id' => 'id']);
     }
     
     /**
      * @inheritdoc
-     * @return \vendor\derekisbusy\geo\models\GeoStateQuery the active query used by this AR class.
+     * @return \derekisbusy\geo\models\GeoStateQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new \vendor\derekisbusy\geo\models\GeoStateQuery(get_called_class());
+        return new \derekisbusy\geo\models\GeoStateQuery(get_called_class());
     }
 }

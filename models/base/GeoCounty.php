@@ -1,6 +1,6 @@
 <?php
 
-namespace vendor\derekisbusy\geo\models\base;
+namespace derekisbusy\geo\models\base;
 
 use Yii;
 
@@ -11,9 +11,9 @@ use Yii;
  * @property string $county
  * @property integer $state_id
  *
- * @property \vendor\derekisbusy\geo\models\GeoCity[] $geoCities
- * @property \vendor\derekisbusy\geo\models\GeoState $state
- * @property \vendor\derekisbusy\geo\models\GeoZip[] $geoZips
+ * @property \derekisbusy\geo\models\GeoCity[] $geoCities
+ * @property \derekisbusy\geo\models\GeoState $state
+ * @property \derekisbusy\geo\models\GeoZip[] $geoZips
  */
 class GeoCounty extends \yii\db\ActiveRecord
 {
@@ -56,7 +56,7 @@ class GeoCounty extends \yii\db\ActiveRecord
      */
     public function getGeoCities()
     {
-        return $this->hasMany(\vendor\derekisbusy\geo\models\GeoCity::className(), ['county_id' => 'id']);
+        return $this->hasMany(\derekisbusy\geo\models\GeoCity::className(), ['county_id' => 'id']);
     }
         
     /**
@@ -64,7 +64,7 @@ class GeoCounty extends \yii\db\ActiveRecord
      */
     public function getState()
     {
-        return $this->hasOne(\vendor\derekisbusy\geo\models\GeoState::className(), ['id' => 'state_id']);
+        return $this->hasOne(\derekisbusy\geo\models\GeoState::className(), ['id' => 'state_id']);
     }
         
     /**
@@ -72,15 +72,15 @@ class GeoCounty extends \yii\db\ActiveRecord
      */
     public function getGeoZips()
     {
-        return $this->hasMany(\vendor\derekisbusy\geo\models\GeoZip::className(), ['county_id' => 'id']);
+        return $this->hasMany(\derekisbusy\geo\models\GeoZip::className(), ['county_id' => 'id']);
     }
     
     /**
      * @inheritdoc
-     * @return \vendor\derekisbusy\geo\models\GeoCountyQuery the active query used by this AR class.
+     * @return \derekisbusy\geo\models\GeoCountyQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new \vendor\derekisbusy\geo\models\GeoCountyQuery(get_called_class());
+        return new \derekisbusy\geo\models\GeoCountyQuery(get_called_class());
     }
 }

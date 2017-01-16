@@ -1,6 +1,6 @@
 <?php
 
-namespace vendor\derekisbusy\geo\models\base;
+namespace derekisbusy\geo\models\base;
 
 use Yii;
 
@@ -15,9 +15,9 @@ use Yii;
  * @property integer $state_id
  * @property string $city_id
  *
- * @property \vendor\derekisbusy\geo\models\GeoCity $city
- * @property \vendor\derekisbusy\geo\models\GeoCounty $county
- * @property \vendor\derekisbusy\geo\models\GeoState $state
+ * @property \derekisbusy\geo\models\GeoCity $city
+ * @property \derekisbusy\geo\models\GeoCounty $county
+ * @property \derekisbusy\geo\models\GeoState $state
  */
 class GeoZip extends \yii\db\ActiveRecord
 {
@@ -64,7 +64,7 @@ class GeoZip extends \yii\db\ActiveRecord
      */
     public function getCity()
     {
-        return $this->hasOne(\vendor\derekisbusy\geo\models\GeoCity::className(), ['id' => 'city_id']);
+        return $this->hasOne(\derekisbusy\geo\models\GeoCity::className(), ['id' => 'city_id']);
     }
         
     /**
@@ -72,7 +72,7 @@ class GeoZip extends \yii\db\ActiveRecord
      */
     public function getCounty()
     {
-        return $this->hasOne(\vendor\derekisbusy\geo\models\GeoCounty::className(), ['id' => 'county_id']);
+        return $this->hasOne(\derekisbusy\geo\models\GeoCounty::className(), ['id' => 'county_id']);
     }
         
     /**
@@ -80,15 +80,15 @@ class GeoZip extends \yii\db\ActiveRecord
      */
     public function getState()
     {
-        return $this->hasOne(\vendor\derekisbusy\geo\models\GeoState::className(), ['id' => 'state_id']);
+        return $this->hasOne(\derekisbusy\geo\models\GeoState::className(), ['id' => 'state_id']);
     }
     
     /**
      * @inheritdoc
-     * @return \vendor\derekisbusy\geo\models\GeoZipQuery the active query used by this AR class.
+     * @return \derekisbusy\geo\models\GeoZipQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new \vendor\derekisbusy\geo\models\GeoZipQuery(get_called_class());
+        return new \derekisbusy\geo\models\GeoZipQuery(get_called_class());
     }
 }

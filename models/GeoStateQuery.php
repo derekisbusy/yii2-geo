@@ -1,6 +1,6 @@
 <?php
 
-namespace vendor\derekisbusy\geo\models;
+namespace derekisbusy\geo\models;
 
 /**
  * This is the ActiveQuery class for [[GeoState]].

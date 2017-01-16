@@ -1,6 +1,6 @@
 <?php
 
-namespace vendor\derekisbusy\geo\models\base;
+namespace derekisbusy\geo\models\base;
 
 use Yii;
 
@@ -12,9 +12,9 @@ use Yii;
  * @property integer $state_id
  * @property string $county_id
  *
- * @property \vendor\derekisbusy\geo\models\GeoCounty $county
- * @property \vendor\derekisbusy\geo\models\GeoState $state
- * @property \vendor\derekisbusy\geo\models\GeoZip[] $geoZips
+ * @property \derekisbusy\geo\models\GeoCounty $county
+ * @property \derekisbusy\geo\models\GeoState $state
+ * @property \derekisbusy\geo\models\GeoZip[] $geoZips
  */
 class GeoCity extends \yii\db\ActiveRecord
 {
@@ -58,7 +58,7 @@ class GeoCity extends \yii\db\ActiveRecord
      */
     public function getCounty()
     {
-        return $this->hasOne(\vendor\derekisbusy\geo\models\GeoCounty::className(), ['id' => 'county_id']);
+        return $this->hasOne(\derekisbusy\geo\models\GeoCounty::className(), ['id' => 'county_id']);
     }
         
     /**
@@ -66,7 +66,7 @@ class GeoCity extends \yii\db\ActiveRecord
      */
     public function getState()
     {
-        return $this->hasOne(\vendor\derekisbusy\geo\models\GeoState::className(), ['id' => 'state_id']);
+        return $this->hasOne(\derekisbusy\geo\models\GeoState::className(), ['id' => 'state_id']);
     }
         
     /**
@@ -74,15 +74,15 @@ class GeoCity extends \yii\db\ActiveRecord
      */
     public function getGeoZips()
     {
-        return $this->hasMany(\vendor\derekisbusy\geo\models\GeoZip::className(), ['city_id' => 'id']);
+        return $this->hasMany(\derekisbusy\geo\models\GeoZip::className(), ['city_id' => 'id']);
     }
     
     /**
      * @inheritdoc
-     * @return \vendor\derekisbusy\geo\models\GeoCityQuery the active query used by this AR class.
+     * @return \derekisbusy\geo\models\GeoCityQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new \vendor\derekisbusy\geo\models\GeoCityQuery(get_called_class());
+        return new \derekisbusy\geo\models\GeoCityQuery(get_called_class());
     }
 }

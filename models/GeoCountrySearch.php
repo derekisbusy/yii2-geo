@@ -1,14 +1,14 @@
 <?php
 
-namespace vendor\derekisbusy\geo\models;
+namespace derekisbusy\geo\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use vendor\derekisbusy\geo\models\GeoCountry;
+use derekisbusy\geo\models\GeoCountry;
 
 /**
- * vendor\derekisbusy\geo\models\GeoCountrySearch represents the model behind the search form about `vendor\derekisbusy\geo\models\GeoCountry`.
+ * derekisbusy\geo\models\GeoCountrySearch represents the model behind the search form about `derekisbusy\geo\models\GeoCountry`.
  */
  class GeoCountrySearch extends GeoCountry
 {

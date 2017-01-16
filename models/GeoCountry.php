@@ -1,8 +1,8 @@
 <?php
 
-namespace vendor\derekisbusy\geo\models;
+namespace derekisbusy\geo\models;
 
-use \vendor\derekisbusy\geo\models\base\GeoCountry as BaseGeoCountry;
+use \derekisbusy\geo\models\base\GeoCountry as BaseGeoCountry;
 
 /**
  * This is the model class for table "geo_country".
