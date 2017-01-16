@@ -20,7 +20,7 @@ class GeoCounty extends \yii\db\ActiveRecord
     use \mootensai\relation\RelationTrait;
 
     public function __toString() {
-            return $this->county;
+        return $this->county;
     }
     
     /**
