@@ -19,22 +19,22 @@ class DefaultController extends Controller
     
     public function actionCity($cityName)
     {
-        $this->cssSuffix = 'geo-doctor';
         $cityName = str_replace('_',' ',$cityName);
         $city = \derekisbusy\geo\models\GeoCity::find()->where(['LIKE','city',$cityName])->andWhere(['state_code'=>'NM'])->one();
-        if($city===null)
-            throw new \yii\web\NotFoundHttpException(Yii::t('common','The page could not be found.'));
+        if ($city === null) {
+            throw new \yii\web\NotFoundHttpException(Yii::t('common', 'The page could not be found.'));
+        }
         return $this->render('city',array('city'=>$city));
     }
     
     public function actionCounty($countyName)
     {
-        $this->cssSuffix = 'geo-doctor';
         $countyName = str_replace('_county','',$countyName);
         $countyName = str_replace('_',' ',$countyName);
         $county = \derekisbusy\geo\models\GeoCounty::find()->where(['LIKE','county',$countyName])->andWhere(['state_id'=>33])->one();
-        if($county===null)
-            throw new \yii\web\NotFoundHttpException(Yii::t('common','The page could not be found.'));
+        if ($county === null) {
+            throw new \yii\web\NotFoundHttpException(Yii::t('common', 'The page could not be found.'));
+        }
         return $this->render('county',array('county'=>$county));
     }
     
