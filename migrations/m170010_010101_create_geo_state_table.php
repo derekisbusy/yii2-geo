@@ -14,7 +14,7 @@ class m170010_010101_create_geo_state_table extends \yii\db\Migration
 
         if (!in_array(Yii::$app->db->tablePrefix.'geo_state', $tables))  {
             $this->createTable('{{%geo_state}}', [
-                'id' => $this->primaryKey(),
+                'id' => $this->primaryKey(3)->unsigned(),
                 'state' => $this->string(22)->notNull(),
                 'state_code' => $this->char(2)->notNull(),
             ], $tableOptions);

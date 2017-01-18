@@ -14,10 +14,10 @@ class m170110_000101_create_geo_city_table extends \yii\db\Migration
 
         if (!in_array(Yii::$app->db->tablePrefix.'geo_city', $tables))  {
             $this->createTable('{{%geo_city}}', [
-                'id' => $this->primaryKey(),
+                'id' => $this->primaryKey(10)->unsigned(),
                 'city' => $this->string(50)->notNull(),
-                'state_id' => $this->smallInteger(5)->notNull(),
-                'county_id' => $this->smallInteger(5)->notNull(),
+                'state_id' => $this->integer(3)->unsigned()->notNull(),
+                'county_id' => $this->integer(5)->unsigned()->notNull(),
             ], $tableOptions);
 
 

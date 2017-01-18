@@ -15,9 +15,9 @@ class m170110_000001_create_geo_county_table extends \yii\db\Migration
 
         if (!in_array(Yii::$app->db->tablePrefix.'geo_county', $tables))  {
             $this->createTable('{{%geo_county}}', [
-                'id' => $this->primaryKey(),
+                'id' => $this->primaryKey(5)->unsigned(),
                 'county' => $this->string(100)->notNull(),
-                'state_id' => $this->smallInteger(5)->notNull(),
+                'state_id' => $this->integer(3)->unsigned()->notNull(),
             ], $tableOptions);
 
             // State ID
