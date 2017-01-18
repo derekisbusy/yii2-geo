@@ -1,7 +1,7 @@
 <?php
 
 use yii\db\Schema;
-
+ini_set('memory_limit',-1);
 class m170110_000101_create_geo_city_table extends \yii\db\Migration
 {
     public function up()
@@ -54,7 +54,7 @@ class m170110_000101_create_geo_city_table extends \yii\db\Migration
                 'CASCADE',
                 'CASCADE'
             );
-            
+
             $this->insertData();
         } else {
           echo 'Table `'.Yii::$app->db->tablePrefix.'geo_city` already exists!';
