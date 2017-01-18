@@ -14,7 +14,7 @@ class m160110_050101_create_geo_country_table extends \yii\db\Migration
 
         if (!in_array(Yii::$app->db->tablePrefix.'geo_country', $tables))  {
             $this->createTable('{{%geo_country}}', [
-                'id' => $this->primaryKey(),
+                'id' => $this->primaryKey(3)->unsigned(),
                 'country_code' => $this->string(2)->notNull(),
                 'country' => $this->string(50)->notNull(),
             ], $tableOptions);
@@ -22,14 +22,14 @@ class m160110_050101_create_geo_country_table extends \yii\db\Migration
 
             $this->createIndex(
                 'idx-geo_country-country_code',
-                '{{%contact}}',
+                '{{%geo_country}}',
                 'country_code',
                 true
             );
 
             $this->createIndex(
                 'idx-geo_country-country',
-                '{{%contact}}',
+                '{{%geo_country}}',
                 'country',
                 true
             );
