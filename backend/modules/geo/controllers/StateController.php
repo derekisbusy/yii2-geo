@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\geo\controllers;
+namespace derekisbusy\geo\backend\modules\geo\controllers;
 
 use Yii;
 use derekisbusy\geo\models\GeoState;
