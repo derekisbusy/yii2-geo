@@ -1,5 +1,7 @@
 <?php
 
+namespace backend\modules\backend\geo\controllers;
+
 use derekisbusy\geo\models\GeoCounty;
 use derekisbusy\geo\models\GeoCountySearch;
 use yii\data\ArrayDataProvider;
@@ -8,7 +10,6 @@ use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
-namespace backend\modules\geo\controllers;
 
 /**
  * CountyController implements the CRUD actions for GeoCounty model.
