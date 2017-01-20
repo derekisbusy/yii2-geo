@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\backend\geo\controllers;
+namespace derekisbusy\geo\backend\modules\geo\controllers;
 
 use derekisbusy\geo\models\GeoCounty;
 use derekisbusy\geo\models\GeoCountySearch;
