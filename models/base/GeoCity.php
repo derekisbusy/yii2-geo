@@ -2,6 +2,10 @@
 
 namespace derekisbusy\geo\models\base;
 
+use derekisbusy\geo\models\GeoCityQuery;
+use derekisbusy\geo\models\GeoCounty;
+use derekisbusy\geo\models\GeoState;
+use derekisbusy\geo\models\GeoZip;
 use Yii;
 
 /**
@@ -12,9 +16,9 @@ use Yii;
  * @property integer $state_id
  * @property string $county_id
  *
- * @property \derekisbusy\geo\models\GeoCounty $county
- * @property \derekisbusy\geo\models\GeoState $state
- * @property \derekisbusy\geo\models\GeoZip[] $geoZips
+ * @property GeoCounty $county
+ * @property GeoState $state
+ * @property GeoZip[] $geoZips
  */
 class GeoCity extends \yii\db\ActiveRecord
 {
@@ -63,7 +67,7 @@ class GeoCity extends \yii\db\ActiveRecord
      */
     public function getCounty()
     {
-        return $this->hasOne(\derekisbusy\geo\models\GeoCounty::className(), ['id' => 'county_id']);
+        return $this->hasOne(GeoCounty::className(), ['id' => 'county_id']);
     }
         
     /**
@@ -71,7 +75,7 @@ class GeoCity extends \yii\db\ActiveRecord
      */
     public function getState()
     {
-        return $this->hasOne(\derekisbusy\geo\models\GeoState::className(), ['id' => 'state_id']);
+        return $this->hasOne(GeoState::className(), ['id' => 'state_id']);
     }
         
     /**
@@ -79,15 +83,15 @@ class GeoCity extends \yii\db\ActiveRecord
      */
     public function getGeoZips()
     {
-        return $this->hasMany(\derekisbusy\geo\models\GeoZip::className(), ['city_id' => 'id']);
+        return $this->hasMany(GeoZip::className(), ['city_id' => 'id']);
     }
     
     /**
      * @inheritdoc
-     * @return \derekisbusy\geo\models\GeoCityQuery the active query used by this AR class.
+     * @return GeoCityQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new \derekisbusy\geo\models\GeoCityQuery(get_called_class());
+        return new GeoCityQuery(get_called_class());
     }
 }
