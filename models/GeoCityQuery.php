@@ -9,12 +9,18 @@ namespace derekisbusy\geo\models;
  */
 class GeoCityQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
+    public function stateCode($state_code)
     {
-        $this->andWhere('[[status]]=1');
+        $this->where(['state_code' => $state_code]);
         return $this;
-    }*/
+    }
 
+    
+    public function withState($state = null)
+    {
+        $this->innerJoin(GeoState::tableName(), GeoCity::tableName().'.state_id = '.GeoState::tableName().'.id');
+        return $this;
+    }
     /**
      * @inheritdoc
      * @return GeoCity[]|array
