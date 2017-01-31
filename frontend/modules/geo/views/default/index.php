@@ -4,9 +4,6 @@ use kartik\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
 
-
-
-
 $gridColumns = [
     [
         'attribute'=>'city',
