@@ -2,6 +2,9 @@
 
 namespace derekisbusy\geo\frontend\modules\geo\controllers;
 
+use derekisbusy\geo\models\GeoCity;
+use derekisbusy\geo\models\GeoCitySearch;
+use derekisbusy\geo\models\GeoCounty;
 use yii\web\Controller;
 
 /**
@@ -11,7 +14,7 @@ class DefaultController extends Controller
 {
     public function actionIndex()
     {
-        $searchModel = new \derekisbusy\geo\models\GeoCitySearch;
+        $searchModel = new GeoCitySearch;
         $searchModel->state_id = 10;
         $dataProvider = $searchModel->search(\Yii::$app->request->getQueryParams());
         return $this->render('index',['dataProvider'=>$dataProvider,'searchModel'=>$searchModel]);
@@ -20,7 +23,7 @@ class DefaultController extends Controller
     public function actionCity($cityName)
     {
         $cityName = str_replace('_',' ',$cityName);
-        $city = \derekisbusy\geo\models\GeoCity::find()->where(['LIKE','city',$cityName])->andWhere(['state_code'=>'NM'])->one();
+        $city = GeoCity::find()->withState()->where(['LIKE','city',$cityName])->andWhere(['state_code'=>'FL'])->one();
         if ($city === null) {
             throw new \yii\web\NotFoundHttpException(Yii::t('common', 'The page could not be found.'));
         }
@@ -31,7 +34,7 @@ class DefaultController extends Controller
     {
         $countyName = str_replace('_county','',$countyName);
         $countyName = str_replace('_',' ',$countyName);
-        $county = \derekisbusy\geo\models\GeoCounty::find()->where(['LIKE','county',$countyName])->andWhere(['state_id'=>33])->one();
+        $county = GeoCounty::find()->where(['LIKE','county',$countyName])->andWhere(['state_id'=>33])->one();
         if ($county === null) {
             throw new \yii\web\NotFoundHttpException(Yii::t('common', 'The page could not be found.'));
         }
