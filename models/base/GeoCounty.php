@@ -88,4 +88,8 @@ class GeoCounty extends \yii\db\ActiveRecord
         return new \derekisbusy\geo\models\GeoCountyQuery(get_called_class());
     }
     
+    public static function getCountyNameById($county_id)
+    {
+        return self::findOne($county_id)->county;
+    }
 }
