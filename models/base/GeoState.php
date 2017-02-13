@@ -10,6 +10,9 @@ use Yii;
  * @property integer $id
  * @property string $state
  * @property string $state_code
+ * @property string $abbr
+ * @property string $demonym
+ * @property string $adjective
  *
  * @property \derekisbusy\geo\models\GeoCity[] $geoCities
  * @property \derekisbusy\geo\models\GeoCounty[] $geoCounties
@@ -32,8 +35,9 @@ class GeoState extends \yii\db\ActiveRecord
         return [
             [['state', 'state_code'], 'required'],
             [['state'], 'string', 'max' => 22],
+            [['demonym','adjective'], 'string', 'max' => 30],
             [['state_code'], 'string', 'max' => 2],
-            [['state_code'], 'unique']
+            [['state_code','state'], 'unique']
         ];
     }
     
@@ -54,6 +58,9 @@ class GeoState extends \yii\db\ActiveRecord
             'id' => Yii::t('geo', 'ID'),
             'state' => Yii::t('geo', 'State'),
             'state_code' => Yii::t('geo', 'State Code'),
+            'abbr' => Yii::t('geo', 'Abbr'),
+            'demonym' => Yii::t('geo', 'Demonym'),
+            'adjective' => Yii::t('geo', 'Adjective'),
         ];
     }
     

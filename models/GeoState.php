@@ -9,19 +9,6 @@ use \derekisbusy\geo\models\base\GeoState as BaseGeoState;
  */
 class GeoState extends BaseGeoState
 {
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return array_replace_recursive(parent::rules(),
-	    [
-            [['state', 'state_code'], 'required'],
-            [['state'], 'string', 'max' => 22],
-            [['state_code'], 'string', 'max' => 2],
-            [['state_code'], 'unique']
-        ]);
-    }
 	
     public static function getStates() {
         $states = self::find()->asArray()->all();

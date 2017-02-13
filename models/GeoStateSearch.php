@@ -19,7 +19,7 @@ use derekisbusy\geo\models\GeoState;
     {
         return [
             [['id'], 'integer'],
-            [['state', 'state_code'], 'safe'],
+            [['state', 'state_code', 'abbr', 'demonym', 'adjective'], 'safe'],
         ];
     }
 
@@ -60,7 +60,10 @@ use derekisbusy\geo\models\GeoState;
         ]);
 
         $query->andFilterWhere(['like', 'state', $this->state])
-            ->andFilterWhere(['like', 'state_code', $this->state_code]);
+            ->andFilterWhere(['like', 'state_code', $this->state_code])
+            ->andFilterWhere(['like', 'abbr', $this->abbr])
+            ->andFilterWhere(['like', 'demonym', $this->demonym])
+            ->andFilterWhere(['like', 'adjective', $this->adjective]);
 
         return $dataProvider;
     }
