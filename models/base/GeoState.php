@@ -35,6 +35,7 @@ class GeoState extends \yii\db\ActiveRecord
         return [
             [['state', 'state_code'], 'required'],
             [['state'], 'string', 'max' => 22],
+            [['abbr'], 'string', 'max' => 10],
             [['demonym','adjective'], 'string', 'max' => 30],
             [['state_code'], 'string', 'max' => 2],
             [['state_code','state'], 'unique']
