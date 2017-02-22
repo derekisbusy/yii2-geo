@@ -46,6 +46,9 @@ $this->registerJs($search);
         ['attribute' => 'id', 'visible' => false],
         'state',
         'state_code',
+        'abbr',
+        'demonym',
+        'adjective',
         [
             'class' => 'yii\grid\ActionColumn',
         ],

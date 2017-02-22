@@ -37,6 +37,9 @@ $this->params['breadcrumbs'][] = $this->title;
         ['attribute' => 'id', 'visible' => false],
         'state',
         'state_code',
+        'abbr',
+        'demonym',
+        'adjective',
     ];
     echo DetailView::widget([
         'model' => $model,
