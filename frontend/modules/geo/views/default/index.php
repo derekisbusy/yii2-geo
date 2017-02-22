@@ -6,23 +6,22 @@ use yii\widgets\Pjax;
 
 $gridColumns = [
     [
-        'attribute'=>'city',
+        'attribute'=>'state',
         'format'=>'raw',
         'value'=>function($model, $key, $index, $column) {
-            $l=strtolower(str_replace(' ', '_', $model->city));
-            return '<a href="'.\yii\helpers\Url::to('/geo/default/city/'.$l).'">'.$model->city.'</a>';
+            $l=strtolower(str_replace(' ', '_', $model->state));
+            return '<a href="'.\yii\helpers\Url::to('/geo/default/state/'.$l).'">'.$model->state.'</a>';
         }
     ],
     [
-        'attribute'=>'county',
+        'attribute'=>'state_code',
         'format'=>'raw',
         'value'=>function($model, $key, $index, $column) {
-            $l=strtolower(str_replace(' ', '_', $model->county));
-            return '<a href="'.\yii\helpers\Url::to('/geo/default/county/'.$l.'_county').'">'.$model->county.' County</a>';
+            return '<a href="'.\yii\helpers\Url::to('/geo/default/state/'.$model->state_code).'">'.$model->state_code.'</a>';
         }
     ]
 ];
-Html::beginTag('div', ['class'=>'city']);
+Html::beginTag('div', ['class'=>'state']);
 //Pjax::begin();
 echo GridView::widget([
     'dataProvider'=>$dataProvider,
@@ -69,11 +68,10 @@ echo GridView::widget([
 //    {panelFooter}',
     'panel'=>[
         'type'=>GridView::TYPE_DEFAULT,
-        'heading'=>'Cities',
+        'heading'=>Yii::t('geo','States'),
     ],
     'persistResize'=>false,
 //    'exportConfig'=>$exportConfig,
 ]);
 //Pjax::end();
 Html::endTag('div');
-
