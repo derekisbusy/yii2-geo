@@ -44,38 +44,44 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'state')->textInput(['maxlength' => true, 'placeholder' => 'State']) ?>
 
     <?= $form->field($model, 'state_code')->textInput(['maxlength' => true, 'placeholder' => 'State Code']) ?>
+    
+    <?= $form->field($model, 'abbr')->textInput(['maxlength' => true, 'placeholder' => 'Abbreviation']) ?>
+    
+    <?= $form->field($model, 'demonym')->textInput(['maxlength' => true, 'placeholder' => 'Demonym']) ?>
+    
+    <?= $form->field($model, 'adjective')->textInput(['maxlength' => true, 'placeholder' => 'Adjective']) ?>
 
     <?php
-    $forms = [
-        [
-            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode(Yii::t('geo', 'City')),
-            'content' => $this->render('_formGeoCity', [
-                'row' => \yii\helpers\ArrayHelper::toArray($model->geoCities),
-            ]),
-        ],
-        [
-            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode(Yii::t('geo', 'County')),
-            'content' => $this->render('_formGeoCounty', [
-                'row' => \yii\helpers\ArrayHelper::toArray($model->geoCounties),
-            ]),
-        ],
-        [
-            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode(Yii::t('geo', 'Zip')),
-            'content' => $this->render('_formGeoZip', [
-                'row' => \yii\helpers\ArrayHelper::toArray($model->geoZips),
-            ]),
-        ],
-    ];
-    echo kartik\tabs\TabsX::widget([
-        'items' => $forms,
-        'position' => kartik\tabs\TabsX::POS_ABOVE,
-        'encodeLabels' => false,
-        'pluginOptions' => [
-            'bordered' => true,
-            'sideways' => true,
-            'enableCache' => false,
-        ],
-    ]);
+//    $forms = [
+//        [
+//            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode(Yii::t('geo', 'City')),
+//            'content' => $this->render('_formGeoCity', [
+//                'row' => \yii\helpers\ArrayHelper::toArray($model->geoCities),
+//            ]),
+//        ],
+//        [
+//            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode(Yii::t('geo', 'County')),
+//            'content' => $this->render('_formGeoCounty', [
+//                'row' => \yii\helpers\ArrayHelper::toArray($model->geoCounties),
+//            ]),
+//        ],
+//        [
+//            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode(Yii::t('geo', 'Zip')),
+//            'content' => $this->render('_formGeoZip', [
+//                'row' => \yii\helpers\ArrayHelper::toArray($model->geoZips),
+//            ]),
+//        ],
+//    ];
+//    echo kartik\tabs\TabsX::widget([
+//        'items' => $forms,
+//        'position' => kartik\tabs\TabsX::POS_ABOVE,
+//        'encodeLabels' => false,
+//        'pluginOptions' => [
+//            'bordered' => true,
+//            'sideways' => true,
+//            'enableCache' => false,
+//        ],
+//    ]);
     ?>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('common', 'Create') : Yii::t('common', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

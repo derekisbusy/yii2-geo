@@ -22,6 +22,9 @@ use yii\widgets\DetailView;
         ['attribute' => 'id', 'visible' => false],
         'state',
         'state_code',
+        'abbr',
+        'demonym',
+        'adjective',
     ];
     echo DetailView::widget([
         'model' => $model,
