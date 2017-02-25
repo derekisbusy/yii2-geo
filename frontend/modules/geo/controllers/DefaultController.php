@@ -36,21 +36,21 @@ class DefaultController extends Controller
         return $this->render('state',['dataProvider'=>$dataProvider,'searchModel'=>$searchModel, 'state' => $state]);
     }
     
-    public function actionCity($cityName)
+    public function actionCity($stateCode, $stateName, $cityName)
     {
         $cityName = str_replace('_',' ',$cityName);
-        $city = GeoCity::find()->withState()->where(['LIKE','city',$cityName])->andWhere(['state_code'=>'FL'])->one();
+        $city = GeoCity::find()->withState()->where(['LIKE','city',$cityName])->andWhere(['state_code' => $stateCode, 'state' => $stateName])->one();
         if ($city === null) {
             throw new \yii\web\NotFoundHttpException(Yii::t('common', 'The page could not be found.'));
         }
         return $this->render('city',array('city'=>$city));
     }
     
-    public function actionCounty($countyName)
+    public function actionCounty($stateCode, $stateName, $countyName)
     {
         $countyName = str_replace('_county','',$countyName);
         $countyName = str_replace('_',' ',$countyName);
-        $county = GeoCounty::find()->where(['LIKE','county',$countyName])->andWhere(['state_id'=>33])->one();
+        $county = GeoCounty::find()->withState()->where(['LIKE','county',$countyName])->andWhere(['state_code' => $stateCode, 'state' => $stateName])->one();
         if ($county === null) {
             throw new \yii\web\NotFoundHttpException(Yii::t('common', 'The page could not be found.'));
         }
