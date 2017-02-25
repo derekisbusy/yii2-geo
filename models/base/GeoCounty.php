@@ -57,6 +57,8 @@ class GeoCounty extends \yii\db\ActiveRecord
             'id' => Yii::t('geo', 'ID'),
             'county' => Yii::t('geo', 'County'),
             'state_id' => Yii::t('geo', 'State ID'),
+            'state' => Yii::t('geo', 'State'),
+            'status' => Yii::t('geo', 'Status'),
         ];
     }
     
@@ -104,6 +106,15 @@ class GeoCounty extends \yii\db\ActiveRecord
             self::STATUS_ACTIVE => Yii::t('geo', 'Active'),
             self::STATUS_INACTIVE => Yii::t('geo', 'Inactive'),
             self::STATUS_DELETED => Yii::t('geo', 'Deleted'),
+        ];
+    }
+    
+    public static function getStatusLabelTypes()
+    {
+        return [
+            self::STATUS_ACTIVE => 'success',
+            self::STATUS_INACTIVE => 'default',
+            self::STATUS_DELETED => 'danger',
         ];
     }
 }
