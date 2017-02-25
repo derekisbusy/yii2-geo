@@ -19,6 +19,10 @@ class GeoCounty extends \yii\db\ActiveRecord
 {
     use \mootensai\relation\RelationTrait;
 
+    const STATUS_DELETED = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 2;
+    
     public function __toString() {
         return $this->county;
     }
@@ -31,7 +35,8 @@ class GeoCounty extends \yii\db\ActiveRecord
         return [
             [['county', 'state_id'], 'required'],
             [['state_id'], 'integer'],
-            [['county'], 'string', 'max' => 100]
+            [['county'], 'string', 'max' => 100],
+            ['status', 'in', 'range' => array_keys(self::getStatusOptions())]
         ];
     }
     
@@ -91,5 +96,14 @@ class GeoCounty extends \yii\db\ActiveRecord
     public static function getCountyNameById($county_id)
     {
         return self::findOne($county_id)->county;
+    }
+    
+    public static function getStatusOptions()
+    {
+        return [
+            self::STATUS_ACTIVE => Yii::t('geo', 'Active'),
+            self::STATUS_INACTIVE => Yii::t('geo', 'Inactive'),
+            self::STATUS_DELETED => Yii::t('geo', 'Deleted'),
+        ];
     }
 }
