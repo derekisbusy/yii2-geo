@@ -83,10 +83,8 @@ $columns = [
         'class' => 'yii\grid\ActionColumn',
     ],
 ]; 
-
-            
+   
 echo Html::beginTag('div', ['class'=>'geo-county-index']);
-            
 Pjax::begin();
 $gridId = 'geo-county-grid';
 echo DynaGrid::widget([
@@ -143,7 +141,7 @@ echo DynaGrid::widget([
         'panel' => [
             'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> ' . Html::encode($this->title) . ' </h3>',
             'type' => 'info',
-            'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> ' . Yii::t('geo', 'New County'), ['create'], ['class' => 'btn btn-success']), 'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+            'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> ' . Yii::t('geo', 'New County'), ['create'], ['class' => 'btn btn-success']), 
             'showFooter' => true,
             'after' => 
                 Html::beginTag('div', ['class'=>' pull-left gridview-after-text']) .
@@ -151,7 +149,7 @@ echo DynaGrid::widget([
                 Html::endTag('div') .
                 Html::a('<i class="glyphicon glyphicon-trash"></i> Delete', ['delete-multiple'], [
                     'class' => 'pull-left clear btn btn-danger btn-delete-items',
-                    'data-confirm-message' => Yii::t('medical', 'Are you sure you want to delete these ' . Yii::t('medical', 'counties') . '?'),
+                    'data-confirm-message' => Yii::t('medical', 'Are you sure you want to delete these ' . Yii::t('geo', 'counties') . '?'),
                     'data-grid' => $gridId,
                     'data-csrf-param' => yii::$app->request->csrfParam,
                     'data-csrf-token' => yii::$app->request->csrfToken
