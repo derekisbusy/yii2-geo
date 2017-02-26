@@ -35,8 +35,8 @@ $columns = [
         'headerOptions'=>['class'=>'kartik-sheet-style'],
     ],
     [
-        'class' => 'yii\grid\SerialColumn'
-        , 'visible' => false
+        'class' => 'yii\grid\SerialColumn',
+        'visible' => false
     ],
     [
         'class' => 'kartik\grid\ExpandRowColumn',
