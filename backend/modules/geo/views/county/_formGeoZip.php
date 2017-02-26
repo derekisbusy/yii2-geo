@@ -25,16 +25,6 @@ echo TabularForm::widget([
         'zip' => ['type' => TabularForm::INPUT_TEXT],
         'latitude' => ['type' => TabularForm::INPUT_TEXT],
         'longitude' => ['type' => TabularForm::INPUT_TEXT],
-        'state_id' => [
-            'label' => 'State',
-            'type' => TabularForm::INPUT_WIDGET,
-            'widgetClass' => \kartik\widgets\Select2::className(),
-            'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\derekisbusy\geo\models\GeoState::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-                'options' => ['placeholder' => Yii::t('geo', 'Choose state')],
-            ],
-            'columnOptions' => ['width' => '200px']
-        ],
         'city_id' => [
             'label' => 'City',
             'type' => TabularForm::INPUT_WIDGET,

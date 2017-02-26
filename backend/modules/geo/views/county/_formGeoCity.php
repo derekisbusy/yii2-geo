@@ -24,16 +24,6 @@ echo TabularForm::widget([
     'attributes' => [
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'visible' => false],
         'city' => ['type' => TabularForm::INPUT_TEXT],
-        'state_id' => [
-            'label' => 'State',
-            'type' => TabularForm::INPUT_WIDGET,
-            'widgetClass' => \kartik\widgets\Select2::className(),
-            'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(GeoState::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-                'options' => ['placeholder' => Yii::t('geo', 'Choose Geo state')],
-            ],
-            'columnOptions' => ['width' => '200px']
-        ],
         'del' => [
             'type' => 'raw',
             'label' => '',

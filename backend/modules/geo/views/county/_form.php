@@ -36,7 +36,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'county')->textInput(['maxlength' => true, 'placeholder' => 'County']) ?>
 
     <?= $form->field($model, 'state_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\derekisbusy\geo\models\GeoState::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
+        'data' => \yii\helpers\ArrayHelper::map(\derekisbusy\geo\models\GeoState::find()->orderBy('id')->asArray()->all(), 'id', 'state'),
         'options' => ['placeholder' => Yii::t('geo', 'Choose state')],
         'pluginOptions' => [
             'allowClear' => true
