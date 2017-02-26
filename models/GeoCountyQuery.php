@@ -9,11 +9,11 @@ namespace derekisbusy\geo\models;
  */
 class GeoCountyQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
+    public function active()
     {
-        $this->andWhere('[[status]]=1');
+        $this->andWhere('[[status]]='.GeoCounty::STATUS_ACTIVE);
         return $this;
-    }*/
+    }
 
     public function withState($state = null)
     {
