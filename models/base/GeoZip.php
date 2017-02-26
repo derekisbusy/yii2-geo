@@ -58,9 +58,9 @@ class GeoZip extends \yii\db\ActiveRecord
             'zip' => Yii::t('geo', 'Zip'),
             'latitude' => Yii::t('geo', 'Latitude'),
             'longitude' => Yii::t('geo', 'Longitude'),
-            'county_id' => Yii::t('geo', 'County ID'),
-            'state_id' => Yii::t('geo', 'State ID'),
-            'city_id' => Yii::t('geo', 'City ID'),
+            'county_id' => Yii::t('geo', 'County'),
+            'state_id' => Yii::t('geo', 'State'),
+            'city_id' => Yii::t('geo', 'City'),
         ];
     }
     
@@ -95,5 +95,15 @@ class GeoZip extends \yii\db\ActiveRecord
     public static function find()
     {
         return new \derekisbusy\geo\models\GeoZipQuery(get_called_class());
+    }
+    
+    public function beforeValidate()
+    {
+        if ($this->city_id) {
+            $city = \derekisbusy\geo\models\base\GeoCity::findOne($this->city_id);
+            $this->state_id = $city->state_id;
+            $this->county_id = $city->county_id;
+        }
+        return parent::beforeValidate();
     }
 }
