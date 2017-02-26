@@ -4,12 +4,12 @@ namespace derekisbusy\geo\backend\modules\geo\controllers;
 
 use derekisbusy\geo\models\GeoCounty;
 use derekisbusy\geo\models\GeoCountySearch;
+use Yii;
 use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use Yii;
 
 /**
  * CountyController implements the CRUD actions for GeoCounty model.
@@ -30,7 +30,7 @@ class CountyController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'add-geo-city', 'add-geo-zip'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'add-geo-city', 'add-geo-zip', 'delete-multiple', 'mark-multiple'],
                         'roles' => ['@']
                     ],
                     [
@@ -49,7 +49,8 @@ class CountyController extends Controller
     {
         $searchModel = new GeoCountySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $dataProvider->pagination->pageSize = 25;
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -181,6 +182,122 @@ class CountyController extends Controller
             return $this->renderAjax('_formGeoZip', ['row' => $row]);
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        }
+    }
+    
+    /**
+     * @param array $ids
+     * @param integer $status
+     * @return mixed
+     */
+    public function actionMarkMultiple()
+    {
+        $ids = Yii::$app->request->post('ids');
+        $status = Yii::$app->request->post('status');
+        
+        if(!is_array($ids) || empty($ids)) {
+            Yii::$app->getSession()->addFlash('growl', [
+                'type' => 'danger',
+                'duration' => 5000,
+                'icon' => 'fa fa-trash',
+                'title' => 'Failed!',
+                'message' => 'No IDs were sent?',
+            ]);
+        } else {
+            $duration = 1500;
+            foreach($ids as $id) {
+                $duration += 1000;
+                $model = GeoCounty::findOne($id);
+                if($model === null) {
+                    Yii::$app->getSession()->addFlash('growl', [
+                        'type' => 'danger',
+                        'duration' => $duration,
+                        'icon' => 'fa fa-pencil',
+                        'title' => 'Failed!',
+                        'message' => Yii::t('geo','County ID={id} not found?',['id'=>$id]),
+                    ]);
+                    continue;
+                }
+                $countyName = $model->county. ' County';
+                $model->status = $status;
+                if ($model->save()) {
+                    Yii::$app->getSession()->addFlash('growl', [
+                        'type' => 'success',
+                        'options' => ['data-result'=>'success','data-key'=>$id],
+                        'duration' => $duration,
+                        'icon' => 'fa fa-pencil',
+                        'title' => 'Deleted',
+                        'message' => Yii::t('medical','County {county} has been updated', ['county' => $countyName]),
+                    ]);
+                } else {
+                    Yii::$app->getSession()->addFlash('growl', [
+                        'type' => 'danger',
+                        'options' => ['data-result'=>'success','data-key'=>$id],
+                        'duration' => $duration,
+                        'icon' => 'fa fa-pencil',
+                        'title' => 'Error',
+                        'message' => Yii::t('medical','Unabled to update {county}', ['county' => $countyName]),
+                    ]);
+                }
+            }
+        }
+        
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('@derekisbusy/yii2-flash-growl/_growl');
+        } else {
+            return $this->actionIndex();
+        }
+    }
+    
+    /**
+     * @param array $ids
+     * @return mixed
+     */
+    public function actionDeleteMultiple()
+    {
+
+        $ids = Yii::$app->request->post('ids');
+        if(!is_array($ids) || empty($ids)) {
+            Yii::$app->getSession()->addFlash('growl', [
+                'type' => 'danger',
+                'duration' => 5000,
+                'icon' => 'fa fa-trash',
+                'title' => 'Failed!',
+                'message' => 'No IDs were sent?',
+            ]);
+        }
+        else {
+            $duration = 1500;
+            foreach($ids as $id) {
+                $duration += 500;
+                $model = GeoCounty::findOne($id);
+                if($model === null) {
+                    Yii::$app->getSession()->addFlash('growl', [
+                        'type' => 'danger',
+                        'duration' => $duration,
+                        'icon' => 'fa fa-trash',
+                        'title' => 'Failed!',
+                        'message' => Yii::t('geo','County ID={id} not found?',['id'=>$id]),
+                    ]);
+                    continue;
+                }
+                $countyName = $model->county. ' County';
+//                $model->delete();
+                Yii::$app->getSession()->addFlash('growl', [
+                    'type' => 'warning',
+                    'options' => ['data-result'=>'success','data-key'=>$id],
+                    'duration' => $duration,
+                    'icon' => 'fa fa-trash',
+                    'title' => 'Deleted',
+                    'message' => Yii::t('medical','County {county} has been deleted', ['county' => $countyName]),
+                ]);
+            }
+        }
+        
+        if (Yii::$app->request->isAjax || true) {
+            return $this->renderAjax('@derekisbusy/yii2-flash-growl/_growl');
+        } else {
+            return $this->actionIndex();
         }
     }
 }
