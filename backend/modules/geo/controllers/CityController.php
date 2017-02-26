@@ -30,7 +30,7 @@ class CityController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'add-geo-zip'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'add-geo-zip', 'delete-multiple', 'mark-multiple'],
                         'roles' => ['@']
                     ],
                     [
@@ -157,6 +157,127 @@ class CityController extends Controller
             return $this->renderAjax('_formGeoZip', ['row' => $row]);
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        }
+    }
+    
+    
+    /**
+     * @param array $ids
+     * @param integer $status
+     * @return mixed
+     */
+    public function actionMarkMultiple()
+    {
+        $ids = Yii::$app->request->post('ids');
+        $status = Yii::$app->request->post('status');
+        
+        if(!is_array($ids) || empty($ids)) {
+            Yii::$app->getSession()->addFlash('growl', [
+                'type' => 'danger',
+                'duration' => 5000,
+                'icon' => 'fa fa-trash',
+                'title' => 'Failed!',
+                'message' => 'No IDs were sent?',
+            ]);
+        } else {
+            $duration = 1500;
+            $i = 0;
+            foreach($ids as $id) {
+                if ($i % 10 === 0) {
+                    $duration += 1000;
+                }
+                $i++;
+                $model = GeoCity::findOne($id);
+                if($model === null) {
+                    Yii::$app->getSession()->addFlash('growl', [
+                        'type' => 'danger',
+                        'duration' => $duration,
+                        'icon' => 'fa fa-pencil',
+                        'title' => 'Failed!',
+                        'message' => Yii::t('geo','City ID={id} not found?',['id'=>$id]),
+                    ]);
+                    continue;
+                }
+                $stateName = $model->state;
+                $model->status = $status;
+                if ($model->save()) {
+                    Yii::$app->getSession()->addFlash('growl', [
+                        'type' => 'success',
+                        'options' => ['data-result'=>'success','data-key'=>$id],
+                        'duration' => $duration,
+                        'icon' => 'fa fa-pencil',
+                        'title' => 'Status Updated',
+                        'message' => Yii::t('medical','City {city} has been updated', ['city' => $stateName]),
+                    ]);
+                } else {
+                    Yii::$app->getSession()->addFlash('growl', [
+                        'type' => 'danger',
+                        'options' => ['data-result'=>'success','data-key'=>$id],
+                        'duration' => $duration,
+                        'icon' => 'fa fa-pencil',
+                        'title' => 'Error',
+                        'message' => Yii::t('medical','Unabled to update {city}', ['city' => $stateName]),
+                    ]);
+                }
+            }
+        }
+        
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('@derekisbusy/yii2-flash-growl/_growl');
+        } else {
+            return $this->actionIndex();
+        }
+    }
+    
+    /**
+     * @param array $ids
+     * @return mixed
+     */
+    public function actionDeleteMultiple()
+    {
+
+        $ids = Yii::$app->request->post('ids');
+        if(!is_array($ids) || empty($ids)) {
+            Yii::$app->getSession()->addFlash('growl', [
+                'type' => 'danger',
+                'duration' => 5000,
+                'icon' => 'fa fa-trash',
+                'title' => 'Failed!',
+                'message' => 'No IDs were sent?',
+            ]);
+        }
+        else {
+            $duration = 1500;
+            foreach($ids as $id) {
+                $duration += 500;
+                $model = GeoCity::findOne($id);
+                if($model === null) {
+                    Yii::$app->getSession()->addFlash('growl', [
+                        'type' => 'danger',
+                        'duration' => $duration,
+                        'icon' => 'fa fa-trash',
+                        'title' => 'Failed!',
+                        'message' => Yii::t('geo','City ID={id} not found?',['id'=>$id]),
+                    ]);
+                    continue;
+                }
+                $stateName = $model->state;
+//                $model->delete();
+                Yii::$app->getSession()->addFlash('growl', [
+                    'type' => 'warning',
+                    'options' => ['data-result'=>'success','data-key'=>$id],
+                    'duration' => $duration,
+                    'icon' => 'fa fa-trash',
+                    'title' => 'Deleted',
+                    'message' => Yii::t('medical','City {city} has been deleted', ['city' => $stateName]),
+                ]);
+            }
+        }
+        
+        if (Yii::$app->request->isAjax || true) {
+            return $this->renderAjax('@derekisbusy/yii2-flash-growl/_growl');
+        } else {
+            return $this->actionIndex();
         }
     }
 }
