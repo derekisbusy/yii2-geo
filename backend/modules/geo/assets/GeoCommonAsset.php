@@ -4,14 +4,14 @@ namespace derekisbusy\geo\backend\modules\geo\assets;
 use yii\web\AssetBundle;
 
 
-class GeoCountyAsset extends AssetBundle
+class GeoCommonAsset extends AssetBundle
 {
     public $sourcePath = '@derekisbusy/yii2-geo/backend/modules/geo/assets';
     public $css = [
-        'css/geo-county-index.css',
+        'css/common.css',
     ];
     public $js = [
-        'js/geo-county-index.js',
+        'js/common.js',
     ];
     public $depends = [
         'yii\web\JqueryAsset',

@@ -4,22 +4,23 @@
 
 jQuery( document ).ready(function( $ ) {;
     
-    GeoCountyIndex();
-    $(document).on('pjax:success', GeoCountyIndex);
-    $(document).on('pjax:end', GeoCountyIndex);
+    GeoIndex();
+    $(document).on('pjax:success', GeoIndex);
+    $(document).on('pjax:end', GeoIndex);
     
 });
 
-function GeoCountyIndex()
+function GeoIndex()
 {
     
     /**
      * Delete button
      */
-    $('#geo-county-dynagrid .btn-delete-geo-counties').off('click').on('click',function(e){
+    $('.btn-delete-items').off('click').on('click',function(e){
         e.preventDefault();
         var $this = $(this),
             grid = $('#'+$this.data('grid')),
+            pjaxContainer = $this.data('pjax-container'),
             csrfParam = $this.data('csrf-param'),
             csrfToken = $this.data('csrf-token'),
             keys = grid.yiiGridView('getSelectedRows'),
@@ -32,16 +33,19 @@ function GeoCountyIndex()
         
         posting.done(function( data ) {
             $("body").append( data );
-            $.pjax.reload({container:'#geo-county-dynagrid-pjax'});
+            $.pjax.reload({container: pjaxContainer});
         });
+        return false;
     });
+    
     /**
      * Status dropdown button
      */
-    $('#geo-county-dynagrid .btn-update-status-geo-counties').off('click').on('click', function(e){
+    $('.btn-update-status').off('click').on('click', function(e){
         e.preventDefault();
         var $this = $(this),
             grid = $('#'+$this.data('grid')),
+            pjaxContainer = $this.data('pjax-container'),
             csrfParam = $this.data('csrf-param'),
             csrfToken = $this.data('csrf-token'),
             keys = grid.yiiGridView('getSelectedRows'),
@@ -53,7 +57,7 @@ function GeoCountyIndex()
         
         posting.done(function( data ) {
             $("body").append( data );
-            $.pjax.reload({container:'#geo-county-dynagrid-pjax'});
+            $.pjax.reload({container: pjaxContainer});
         });
         return false;
     });
