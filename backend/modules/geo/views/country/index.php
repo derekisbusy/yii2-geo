@@ -8,9 +8,8 @@ use yii\helpers\Html;
 use kartik\export\ExportMenu;
 use kartik\grid\GridView;
 
-$this->title = Yii::t('geo', 'Countries');
+$this->title = Yii::t('geo', 'Geo Countries');
 $this->params['breadcrumbs'][] = $this->title;
-
 $search = "$('.search-button').click(function(){
 	$('.search-form').toggle(1000);
 	return false;
@@ -23,7 +22,7 @@ $this->registerJs($search);
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('geo', 'Create Country'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('geo', 'Create Geo Country'), ['create'], ['class' => 'btn btn-success']) ?>
         <?= Html::a(Yii::t('geo', 'Advance Search'), '#', ['class' => 'btn btn-info search-button']) ?>
     </p>
     <div class="search-form" style="display:none">
@@ -32,18 +31,6 @@ $this->registerJs($search);
     <?php 
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
-        [
-            'class' => 'kartik\grid\ExpandRowColumn',
-            'width' => '50px',
-            'value' => function ($model, $key, $index, $column) {
-                return GridView::ROW_COLLAPSED;
-            },
-            'detail' => function ($model, $key, $index, $column) {
-                return Yii::$app->controller->renderPartial('_expand', ['model' => $model]);
-            },
-            'headerOptions' => ['class' => 'kartik-sheet-style'],
-            'expandOneOnly' => true
-        ],
         ['attribute' => 'id', 'visible' => false],
         'country_code',
         'country',
