@@ -20,6 +20,7 @@ use derekisbusy\geo\models\GeoState;
         return [
             [['id'], 'integer'],
             [['state', 'state_code', 'abbr', 'demonym', 'adjective'], 'safe'],
+            ['status', 'in', 'range' => array_keys(GeoCounty::getStatusOptions())]
         ];
     }
 
@@ -51,12 +52,13 @@ use derekisbusy\geo\models\GeoState;
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+             $query->where('0=1');
             return $dataProvider;
         }
 
         $query->andFilterWhere([
             'id' => $this->id,
+            'status' => $this->status,
         ]);
 
         $query->andFilterWhere(['like', 'state', $this->state])
