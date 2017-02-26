@@ -14,7 +14,7 @@ class GeoCity extends BaseGeoCity
      */
     public function rules()
     {
-        return array_replace_recursive(parent::rules(),
+        return array_merge(parent::rules(),
 	    [
             [['city', 'state_id', 'county_id'], 'required'],
             [['state_id', 'county_id'], 'integer'],
