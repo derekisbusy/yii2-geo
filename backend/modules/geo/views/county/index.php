@@ -4,7 +4,7 @@
 /* @var $searchModel GeoCountySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-use derekisbusy\geo\backend\modules\geo\assets\GeoCountyAsset;
+use derekisbusy\geo\backend\modules\geo\assets\GeoCommonAsset;
 use derekisbusy\geo\models\GeoCounty;
 use derekisbusy\geo\models\GeoCountySearch;
 use derekisbusy\geo\models\GeoState;
@@ -16,7 +16,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 
-GeoCountyAsset::register($this);
+GeoCommonAsset::register($this);
 
 $this->title = Yii::t('geo', 'Counties');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('geo', 'Geography'), 'url' => ['/geo']];
@@ -150,7 +150,7 @@ echo DynaGrid::widget([
                 Yii::t('geo', 'With selected: ').
                 Html::endTag('div') .
                 Html::a('<i class="glyphicon glyphicon-trash"></i> Delete', ['delete-multiple'], [
-                    'class' => 'pull-left clear btn btn-danger btn-delete-geo-counties',
+                    'class' => 'pull-left clear btn btn-danger btn-delete-items',
                     'data-confirm-message' => Yii::t('medical', 'Are you sure you want to delete these ' . Yii::t('medical', 'counties') . '?'),
                     'data-grid' => $gridId,
                     'data-csrf-param' => yii::$app->request->csrfParam,
@@ -162,10 +162,10 @@ echo DynaGrid::widget([
                 DropdownX::widget([
 //                    'options'=>['class'=>'pull-right'], // for a right aligned dropdown menu
                     'items' => [
-                        ['label' => Yii::t('geo','Active'), 'url' => 'javascript://', 
+                        ['label' => Yii::t('geo','Active'), 'url' => 'javascript:;', 
                             'linkOptions' => [
-                                'class' => 'btn-update-status-geo-counties',
-                                'data-pjax' => false,
+                                'class' => 'btn-update-status',
+                                'data-pjax-container' => '#geo-county-dynagrid-pjax',
                                 'data-url' => Url::toRoute(['mark-multiple']),
                                 'data-status' => GeoCounty::STATUS_ACTIVE,
                                 'data-grid' => $gridId,
@@ -175,7 +175,8 @@ echo DynaGrid::widget([
                         ],
                         ['label' => Yii::t('geo','Inactive'), 'url' => 'javascript:;', 
                             'linkOptions' => [
-                                'class' => 'btn-update-status-geo-counties',
+                                'class' => 'btn-update-status',
+                                'data-pjax-container' => '#geo-county-dynagrid-pjax',
                                 'data-url' => Url::toRoute(['mark-multiple']),
                                 'data-status' => GeoCounty::STATUS_INACTIVE,
                                 'data-grid' => $gridId,
@@ -185,7 +186,8 @@ echo DynaGrid::widget([
                         ],
                         ['label' => Yii::t('geo','Deleted'), 'url' => 'javascript:;', 
                             'linkOptions' => [
-                                'class' => 'btn-update-status-geo-counties',
+                                'class' => 'btn-update-status',
+                                'data-pjax-container' => '#geo-county-dynagrid-pjax',
                                 'data-url' => Url::toRoute(['mark-multiple']),
                                 'data-status' => GeoCounty::STATUS_DELETED,
                                 'data-grid' => $gridId,
