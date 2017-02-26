@@ -2,6 +2,7 @@
 
 namespace derekisbusy\geo\models\base;
 
+use derekisbusy\geo\models\base\ActiveRecord;
 use derekisbusy\geo\models\GeoCityQuery;
 use derekisbusy\geo\models\GeoCounty;
 use derekisbusy\geo\models\GeoState;
@@ -15,14 +16,14 @@ use Yii;
  * @property string $city
  * @property integer $state_id
  * @property string $county_id
+ * @property integer $status
  *
  * @property GeoCounty $county
  * @property GeoState $state
  * @property GeoZip[] $geoZips
  */
-class GeoCity extends \yii\db\ActiveRecord
+class GeoCity extends ActiveRecord
 {
-    use \mootensai\relation\RelationTrait;
 
     public function __toString()
     {
@@ -34,11 +35,11 @@ class GeoCity extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return [
+        return array_merge(parent::rules(),[
             [['city', 'state_id', 'county_id'], 'required'],
             [['state_id', 'county_id'], 'integer'],
             [['city'], 'string', 'max' => 50]
-        ];
+        ]);
     }
     
     /**
@@ -54,12 +55,21 @@ class GeoCity extends \yii\db\ActiveRecord
      */
     public function attributeLabels()
     {
-        return [
+        return array_merge(parent::attributeLabels(),[
             'id' => Yii::t('geo', 'ID'),
             'city' => Yii::t('geo', 'City'),
-            'state_id' => Yii::t('geo', 'State ID'),
-            'county_id' => Yii::t('geo', 'County ID'),
-        ];
+            'state_id' => Yii::t('geo', 'State'),
+            'county_id' => Yii::t('geo', 'County'),
+        ]);
+    }
+    
+    public function beforeValidate()
+    {
+        if ($this->county_id) {
+            $county = \derekisbusy\geo\models\base\GeoCounty::findOne($this->county_id);
+            $this->state_id = $county->state_id;
+        }
+        return parent::beforeValidate();
     }
     
     /**
