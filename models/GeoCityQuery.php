@@ -14,6 +14,12 @@ class GeoCityQuery extends \yii\db\ActiveQuery
         $this->where(['state_code' => $state_code]);
         return $this;
     }
+    
+    public function active()
+    {
+        $this->where(['status' => GeoCity::STATUS_ACTIVE]);
+        return $this;
+    }
 
     
     public function withState($state = null)
