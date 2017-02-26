@@ -78,11 +78,11 @@ class ZipController extends Controller
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
+        
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
