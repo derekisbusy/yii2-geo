@@ -9,11 +9,12 @@ namespace derekisbusy\geo\models;
  */
 class GeoStateQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
+    public function active()
     {
-        $this->andWhere('[[status]]=1');
+        $this->andWhere('[[status]]='.base\GeoState::STATUS_ACTIVE);
         return $this;
-    }*/
+    }
+    
 
     /**
      * @inheritdoc
