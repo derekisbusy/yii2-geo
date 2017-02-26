@@ -18,6 +18,7 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new GeoStateSearch;
+        $searchModel->status = GeoState::STATUS_ACTIVE;
         $dataProvider = $searchModel->search(\Yii::$app->request->getQueryParams());
         return $this->render('index',['dataProvider'=>$dataProvider,'searchModel'=>$searchModel]);
     }
@@ -31,6 +32,8 @@ class DefaultController extends Controller
         }
         $searchModel = new GeoCityAliasSearch;
         $searchModel->state_id = $state->id;
+        $searchModel->city_status = \derekisbusy\geo\models\base\ActiveRecord::STATUS_ACTIVE;
+        $searchModel->county_status = \derekisbusy\geo\models\base\ActiveRecord::STATUS_ACTIVE;
         $request = \Yii::$app->request;
         $dataProvider = $searchModel->search($request->getQueryParams());
         return $this->render('state',['dataProvider'=>$dataProvider,'searchModel'=>$searchModel, 'state' => $state]);
@@ -39,7 +42,7 @@ class DefaultController extends Controller
     public function actionCity($stateCode, $stateName, $cityName)
     {
         $cityName = str_replace('_',' ',$cityName);
-        $city = GeoCity::find()->withState()->where(['LIKE','city',$cityName])->andWhere(['state_code' => $stateCode, 'state' => $stateName])->one();
+        $city = GeoCity::find()->withState()->active()->where(['LIKE','city',$cityName])->andWhere(['state_code' => $stateCode, 'state' => $stateName])->one();
         if ($city === null) {
             throw new \yii\web\NotFoundHttpException(Yii::t('common', 'The page could not be found.'));
         }
@@ -50,22 +53,10 @@ class DefaultController extends Controller
     {
         $countyName = str_replace('_county','',$countyName);
         $countyName = str_replace('_',' ',$countyName);
-        $county = GeoCounty::find()->withState()->where(['LIKE','county',$countyName])->andWhere(['state_code' => $stateCode, 'state' => $stateName])->one();
+        $county = GeoCounty::find()->withState()->active()->where(['LIKE','county',$countyName])->andWhere(['state_code' => $stateCode, 'state' => $stateName])->one();
         if ($county === null) {
             throw new \yii\web\NotFoundHttpException(Yii::t('common', 'The page could not be found.'));
         }
         return $this->render('county',array('county'=>$county));
     }
-    
-    
-    /**
-     * Redirect old site urls to new site
-     * @param type $cityName
-     */
-    public function actionRedirect($cityName)
-    {
-        $cityName = strtolower(str_replace('_','-',$cityName));
-        return $this->redirect('/new-mexico/nm/'.$cityName,301);        
-    }
-
 }
