@@ -47,12 +47,6 @@ use yii\data\ActiveDataProvider;
         
         $query->joinWith(['state']);
         
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'pageSize' => 20
-            ],
-        ]);
         
         $dataProvider->sort->attributes['state'] = [
             'asc' => [GeoState::tableName().'.state' => SORT_ASC],
@@ -63,7 +57,7 @@ use yii\data\ActiveDataProvider;
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+             $query->where('0=1');
             return $dataProvider;
         }
 
