@@ -297,7 +297,7 @@ class StateController extends Controller
                     continue;
                 }
                 $stateName = $model->state;
-//                $model->delete();
+                $model->delete();
                 Yii::$app->getSession()->addFlash('growl', [
                     'type' => 'warning',
                     'options' => ['data-result'=>'success','data-key'=>$id],
