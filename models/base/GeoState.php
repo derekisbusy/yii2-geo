@@ -2,6 +2,11 @@
 
 namespace derekisbusy\geo\models\base;
 
+use derekisbusy\geo\models\base\ActiveRecord;
+use derekisbusy\geo\models\GeoCity;
+use derekisbusy\geo\models\GeoCounty;
+use derekisbusy\geo\models\GeoStateQuery;
+use derekisbusy\geo\models\GeoZip;
 use Yii;
 
 /**
@@ -13,14 +18,14 @@ use Yii;
  * @property string $abbr
  * @property string $demonym
  * @property string $adjective
+ * @property integer $status
  *
- * @property \derekisbusy\geo\models\GeoCity[] $geoCities
- * @property \derekisbusy\geo\models\GeoCounty[] $geoCounties
- * @property \derekisbusy\geo\models\GeoZip[] $geoZips
+ * @property GeoCity[] $geoCities
+ * @property GeoCounty[] $geoCounties
+ * @property GeoZip[] $geoZips
  */
-class GeoState extends \yii\db\ActiveRecord
+class GeoState extends ActiveRecord
 {
-    use \mootensai\relation\RelationTrait;
 
     public function __toString()
     {
@@ -32,14 +37,14 @@ class GeoState extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return [
+        return array_merge(parent::rules(),[
             [['state', 'state_code'], 'required'],
             [['state'], 'string', 'max' => 22],
             [['abbr'], 'string', 'max' => 10],
             [['demonym','adjective'], 'string', 'max' => 30],
             [['state_code'], 'string', 'max' => 2],
-            [['state_code','state'], 'unique']
-        ];
+            [['state_code','state'], 'unique'],
+        ]);
     }
     
     /**
@@ -55,14 +60,14 @@ class GeoState extends \yii\db\ActiveRecord
      */
     public function attributeLabels()
     {
-        return [
+        return array_merge(parent::attributeLabels(),[
             'id' => Yii::t('geo', 'ID'),
             'state' => Yii::t('geo', 'State'),
             'state_code' => Yii::t('geo', 'State Code'),
             'abbr' => Yii::t('geo', 'Abbr'),
             'demonym' => Yii::t('geo', 'Demonym'),
             'adjective' => Yii::t('geo', 'Adjective'),
-        ];
+        ]);
     }
     
     /**
@@ -70,7 +75,7 @@ class GeoState extends \yii\db\ActiveRecord
      */
     public function getGeoCities()
     {
-        return $this->hasMany(\derekisbusy\geo\models\GeoCity::className(), ['state_id' => 'id']);
+        return $this->hasMany(GeoCity::className(), ['state_id' => 'id']);
     }
         
     /**
@@ -78,7 +83,7 @@ class GeoState extends \yii\db\ActiveRecord
      */
     public function getGeoCounties()
     {
-        return $this->hasMany(\derekisbusy\geo\models\GeoCounty::className(), ['state_id' => 'id']);
+        return $this->hasMany(GeoCounty::className(), ['state_id' => 'id']);
     }
         
     /**
@@ -86,15 +91,15 @@ class GeoState extends \yii\db\ActiveRecord
      */
     public function getGeoZips()
     {
-        return $this->hasMany(\derekisbusy\geo\models\GeoZip::className(), ['state_id' => 'id']);
+        return $this->hasMany(GeoZip::className(), ['state_id' => 'id']);
     }
     
     /**
      * @inheritdoc
-     * @return \derekisbusy\geo\models\GeoStateQuery the active query used by this AR class.
+     * @return GeoStateQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new \derekisbusy\geo\models\GeoStateQuery(get_called_class());
+        return new GeoStateQuery(get_called_class());
     }
 }
