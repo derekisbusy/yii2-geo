@@ -14,14 +14,18 @@ use derekisbusy\geo\models\GeoCityAlias;
 {
     public $state_id;
     public $county;
+    public $city_status;
+    public $county_status;
+    
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'city_id','state_id'], 'integer'],
+            [['id', 'city_id','state_id', 'city_status'], 'integer'],
             [['alias','county'], 'safe'],
+            [['city_status', 'county_status'], 'in', 'range' => array_keys(base\ActiveRecord::getStatusOptions())]
         ];
     }
     
@@ -54,6 +58,11 @@ use derekisbusy\geo\models\GeoCityAlias;
     public function search($params)
     {
         $query = GeoCityAlias::find();
+        $query->select(GeoCityAlias::tableName().'.*');
+        $query->addSelect(GeoCity::tableName().'.status as city_status');
+        $query->addSelect(GeoCity::tableName().'.state_id');
+        $query->addSelect(GeoCounty::tableName().'.county');
+        $query->addSelect(GeoCounty::tableName().'.status as county_status');
         $query->with('city.county');
         
         
@@ -84,7 +93,7 @@ use derekisbusy\geo\models\GeoCityAlias;
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+            $query->where('0=1');
             return $dataProvider;
         }
         
@@ -95,7 +104,9 @@ use derekisbusy\geo\models\GeoCityAlias;
             'id' => $this->id,
             'city_id' => $this->city_id,
             'disabled' => 0,
-            base\GeoCity::tableName().'.state_id' => $this->state_id,
+            GeoCity::tableName().'.status' => $this->city_status,
+            GeoCounty::tableName().'.status' => $this->county_status,
+            GeoCity::tableName().'.state_id' => $this->state_id,
         ]);
 
         $query->andFilterWhere(['like', 'alias', $this->alias]);
