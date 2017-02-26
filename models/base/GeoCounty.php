@@ -56,7 +56,7 @@ class GeoCounty extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('geo', 'ID'),
             'county' => Yii::t('geo', 'County'),
-            'state_id' => Yii::t('geo', 'State ID'),
+            'state_id' => Yii::t('geo', 'State'),
             'state' => Yii::t('geo', 'State'),
             'status' => Yii::t('geo', 'Status'),
         ];
