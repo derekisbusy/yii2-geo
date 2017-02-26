@@ -49,7 +49,7 @@ class CountyController extends Controller
     {
         $searchModel = new GeoCountySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->pagination->pageSize = 25;
+        
         
         return $this->render('index', [
             'searchModel' => $searchModel,
