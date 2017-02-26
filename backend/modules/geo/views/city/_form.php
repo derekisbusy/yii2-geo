@@ -1,10 +1,14 @@
 <?php
 
+use derekisbusy\geo\models\GeoCity;
+use derekisbusy\geo\models\GeoCounty;
 use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model derekisbusy\geo\models\GeoCity */
+/* @var $model GeoCity */
 /* @var $form yii\widgets\ActiveForm */
 
 \mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
@@ -27,19 +31,31 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'city')->textInput(['maxlength' => true, 'placeholder' => 'City']) ?>
 
-    <?= $form->field($model, 'state_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\derekisbusy\geo\models\GeoState::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-        'options' => ['placeholder' => Yii::t('geo', 'Choose state')],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); ?>
+    <?php
+//    $form->field($model, 'state_id')->widget(\kartik\widgets\Select2::classname(), [
+//        'data' => \yii\helpers\ArrayHelper::map(\derekisbusy\geo\models\GeoState::find()->orderBy('id')->asArray()->all(), 'id', 'state'),
+//        'options' => ['placeholder' => Yii::t('geo', 'Choose state')],
+//        'pluginOptions' => [
+//            'allowClear' => true
+//        ],
+//    ]); ?>
 
-    <?= $form->field($model, 'county_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\derekisbusy\geo\models\GeoCounty::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
+    <?php
+    echo $form->field($model, 'county_id')->widget(\kartik\widgets\Select2::classname(), [
+//        'data' => \yii\helpers\ArrayHelper::map(\derekisbusy\geo\models\GeoCounty::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
         'options' => ['placeholder' => Yii::t('geo', 'Choose county')],
+        'initValueText' =>  $model->county ? GeoCounty::findOne($model->county_id)->county : '' ,
         'pluginOptions' => [
-            'allowClear' => true
+            'allowClear' => true,
+            'minimumInputLength' => 1,
+            'ajax' => [
+                'url' => Url::to(['/geo/ajax/county']),
+                'dataType' => 'json',
+                'data' => new JsExpression('function(params) { return {q:params.term}; }'),
+            ],
+            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+            'templateResult' => new JsExpression('function(county) { return county.text; }'),
+            'templateSelection' => new JsExpression('function (county) { return county.text; }'),
         ],
     ]); ?>
 
