@@ -174,7 +174,7 @@ echo DynaGrid::widget([
                 Html::endTag('div') .
                 Html::a('<i class="glyphicon glyphicon-trash"></i> Delete', ['delete-multiple'], [
                     'class' => 'pull-left clear btn btn-danger btn-delete-items',
-                    'data-confirm-message' => Yii::t('medical', 'Are you sure you want to delete these ' . Yii::t('geo', 'cities') . '?'),
+                    'data-confirm-message' => Yii::t('geo', 'Are you sure you want to delete these {item}?', ['item' => Yii::t('geo', 'cities')]),
                     'data-grid' => $gridId,
                     'data-csrf-param' => yii::$app->request->csrfParam,
                     'data-csrf-token' => yii::$app->request->csrfToken
