@@ -47,6 +47,9 @@ use yii\data\ActiveDataProvider;
         
         $query->joinWith(['state']);
         
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
         
         $dataProvider->sort->attributes['state'] = [
             'asc' => [GeoState::tableName().'.state' => SORT_ASC],
