@@ -2,16 +2,17 @@
 
 namespace derekisbusy\geo\models;
 
-use Yii;
+use derekisbusy\geo\models\GeoCounty;
+use derekisbusy\geo\models\GeoState;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use derekisbusy\geo\models\GeoCounty;
 
 /**
  * derekisbusy\geo\models\GeoCountySearch represents the model behind the search form about `derekisbusy\geo\models\GeoCounty`.
  */
  class GeoCountySearch extends GeoCounty
 {
+     public $state;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,8 @@ use derekisbusy\geo\models\GeoCounty;
     {
         return [
             [['id', 'state_id'], 'integer'],
-            [['county'], 'safe'],
+            [['county', 'state', 'status'], 'safe'],
+            ['status', 'in', 'range' => array_keys(GeoCounty::getStatusOptions())]
         ];
     }
 
@@ -42,10 +44,20 @@ use derekisbusy\geo\models\GeoCounty;
     public function search($params)
     {
         $query = GeoCounty::find();
-
+        
+        $query->joinWith(['state']);
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 20
+            ],
         ]);
+        
+        $dataProvider->sort->attributes['state'] = [
+            'asc' => [GeoState::tableName().'.state' => SORT_ASC],
+            'desc' => [GeoState::tableName().'.state' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -57,7 +69,8 @@ use derekisbusy\geo\models\GeoCounty;
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'state_id' => $this->state_id,
+            'state_id' => $this->state,
+            'status' => $this->status,
         ]);
 
         $query->andFilterWhere(['like', 'county', $this->county]);
