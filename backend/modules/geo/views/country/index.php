@@ -1,26 +1,19 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $searchModel derekisbusy\geo\models\GeoCountrySearch */
+/* @var $searchModel GeoCountrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-
 use derekisbusy\geo\backend\modules\geo\assets\GeoCommonAsset;
-use derekisbusy\geo\models\GeoCity;
-use derekisbusy\geo\models\GeoCitySearch;
-use derekisbusy\geo\models\GeoState;
-use kartik\dropdown\DropdownX;
 use kartik\dynagrid\DynaGrid;
 use kartik\export\ExportMenu;
-use kartik\grid\GridView;
+use vendor\derekisbusy\geo\models\GeoCountrySearch;
 use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\web\JsExpression;
 use yii\widgets\Pjax;
 
 GeoCommonAsset::register($this);
 
-$this->title = Yii::t('geo', 'Geo Countries');
+$this->title = Yii::t('geo', 'Countries');
 $this->params['breadcrumbs'][] = $this->title;
 $search = "$('.search-button').click(function(){
 	$('.search-form').toggle(1000);
@@ -49,7 +42,6 @@ $columns = [
 
 
 echo Html::beginTag('div', ['class'=>'geo-country-index']);
-Pjax::begin();
 $gridId = 'geo-country-grid';
 echo DynaGrid::widget([
     'columns' => $columns,
@@ -165,5 +157,4 @@ echo DynaGrid::widget([
         ],
     ],
 ]);
-Pjax::end();
 echo Html::endTag('div');

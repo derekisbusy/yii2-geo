@@ -77,7 +77,6 @@ $columns = [
 
 
 echo Html::beginTag('div', ['class'=>'geo-state-index']);
-Pjax::begin();
 $gridId = 'geo-county-grid';
 echo DynaGrid::widget([
     'columns' => $columns,
@@ -193,5 +192,4 @@ echo DynaGrid::widget([
         ],
     ],
 ]);
-Pjax::end();
 echo Html::endTag('div');

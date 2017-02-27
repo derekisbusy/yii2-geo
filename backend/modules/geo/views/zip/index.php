@@ -128,7 +128,6 @@ $columns = [
             
 
 echo Html::beginTag('div', ['class'=>'geo-zip-index']);
-Pjax::begin();
 $gridId = 'geo-zip-grid';
 echo DynaGrid::widget([
     'columns' => $columns,
@@ -244,5 +243,4 @@ echo DynaGrid::widget([
         ],
     ],
 ]);
-Pjax::end();
 echo Html::endTag('div');

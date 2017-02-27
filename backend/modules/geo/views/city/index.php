@@ -110,7 +110,6 @@ $columns = [
 
 
 echo Html::beginTag('div', ['class'=>'geo-city-index']);
-Pjax::begin();
 $gridId = 'geo-city-grid';
 echo DynaGrid::widget([
     'columns' => $columns,
@@ -183,7 +182,6 @@ echo DynaGrid::widget([
                 Html::button('Status <span class="caret"></span></button>', 
                     ['type'=>'button', 'class'=>'btn btn-default', 'data-toggle'=>'dropdown']) . 
                 DropdownX::widget([
-//                    'options'=>['class'=>'pull-right'], // for a right aligned dropdown menu
                     'items' => [
                         ['label' => Yii::t('geo','Active'), 'url' => 'javascript:;', 
                             'linkOptions' => [
@@ -226,5 +224,4 @@ echo DynaGrid::widget([
         ],
     ],
 ]);
-Pjax::end();
 echo Html::endTag('div');
