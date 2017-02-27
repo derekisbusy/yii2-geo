@@ -198,7 +198,7 @@ class CityController extends Controller
                     ]);
                     continue;
                 }
-                $stateName = $model->state;
+                $cityName = $model->city;
                 $model->status = $status;
                 if ($model->save()) {
                     Yii::$app->getSession()->addFlash('growl', [
@@ -207,7 +207,7 @@ class CityController extends Controller
                         'duration' => $duration,
                         'icon' => 'fa fa-pencil',
                         'title' => 'Status Updated',
-                        'message' => Yii::t('medical','City {city} has been updated', ['city' => $stateName]),
+                        'message' => Yii::t('medical','City {city} has been updated', ['city' => $cityName]),
                     ]);
                 } else {
                     Yii::$app->getSession()->addFlash('growl', [
@@ -216,7 +216,7 @@ class CityController extends Controller
                         'duration' => $duration,
                         'icon' => 'fa fa-pencil',
                         'title' => 'Error',
-                        'message' => Yii::t('medical','Unabled to update {city}', ['city' => $stateName]),
+                        'message' => Yii::t('medical','Unabled to update {city}', ['city' => $cityName]),
                     ]);
                 }
             }
