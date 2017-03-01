@@ -12,8 +12,10 @@ use derekisbusy\geo\models\GeoCityAlias;
  */
  class GeoCityAliasSearch extends GeoCityAlias
 {
-    public $state_id;
+    public $state;
     public $county;
+    public $city;
+    public $state_id;
     public $city_status;
     public $county_status;
     
@@ -25,7 +27,10 @@ use derekisbusy\geo\models\GeoCityAlias;
         return [
             [['id', 'city_id','state_id', 'city_status'], 'integer'],
             [['alias','county'], 'safe'],
-            [['city_status', 'county_status'], 'in', 'range' => array_keys(base\ActiveRecord::getStatusOptions())]
+            [['city_status', 'county_status', 'status'], 'in', 'range' => array_keys(base\ActiveRecord::getStatusOptions())],
+            ['state', 'exist', 'targetClass' => GeoState::className(), 'targetAttribute' => 'id'],
+            ['county', 'exist', 'targetClass' => GeoCounty::className(), 'targetAttribute' => 'id'],
+            ['city', 'exist', 'targetClass' => GeoCity::className(), 'targetAttribute' => 'id'],
         ];
     }
     
@@ -71,23 +76,18 @@ use derekisbusy\geo\models\GeoCityAlias;
             'query' => $query,
         ]);
 
-        
-        $dataProvider->setSort([
-           'attributes' => array_merge([
-               'alias' => [
-                    'asc' => ['alias' => SORT_ASC],
-                    'desc' => ['alias' => SORT_DESC],
-                    'label' => 'Order City',
-                    'default' => SORT_ASC
-               ],
-               'county' => [
-                    'asc' => ['county' => SORT_ASC],
-                    'desc' => ['county' => SORT_DESC],
-                    'label' => 'Order County',
-                    'default' => SORT_ASC
-               ],
-           ],array_keys($this->attributes))
-        ]);
+        $dataProvider->sort->attributes['state'] = [
+            'asc' => [GeoState::tableName().'.state' => SORT_ASC],
+            'desc' => [GeoState::tableName().'.state' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['county'] = [
+            'asc' => [GeoState::tableName().'.county' => SORT_ASC],
+            'desc' => [GeoState::tableName().'.county' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['city'] = [
+            'asc' => [GeoState::tableName().'.city' => SORT_ASC],
+            'desc' => [GeoState::tableName().'.city' => SORT_DESC],
+        ];
         
         $this->load($params);
 
@@ -102,15 +102,18 @@ use derekisbusy\geo\models\GeoCityAlias;
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'city_id' => $this->city_id,
             'disabled' => 0,
+            GeoCityAlias::tableName().'.status' => $this->status,
             GeoCity::tableName().'.status' => $this->city_status,
             GeoCounty::tableName().'.status' => $this->county_status,
             GeoCity::tableName().'.state_id' => $this->state_id,
+            GeoCounty::tableName().'.id' => $this->county,
+            GeoCity::tableName().'.state_id' => $this->state,
+            'city_id' => $this->city,
         ]);
 
         $query->andFilterWhere(['like', 'alias', $this->alias]);
-        $query->andFilterWhere(['like', 'county', $this->county]);
+//        $query->andFilterWhere(['like', 'county', $this->county]);
 
         // default sort
         if (!Yii::$app->request->get('sort')) {

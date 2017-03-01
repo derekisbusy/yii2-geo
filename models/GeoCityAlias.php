@@ -9,12 +9,14 @@ use \derekisbusy\geo\models\base\GeoCityAlias as BaseGeoCityAlias;
  */
 class GeoCityAlias extends BaseGeoCityAlias
 {
+    public $state;
+    public $county;
     /**
      * @inheritdoc
      */
     public function rules()
     {
-        return array_replace_recursive(parent::rules(),
+        return array_merge(parent::rules(),
 	    [
             [['alias', 'city_id'], 'required'],
             [['city_id'], 'integer'],
