@@ -12,7 +12,7 @@ use Yii;
  * @property string $alias
  * @property integer $city_id
  */
-class GeoCityAlias extends \yii\db\ActiveRecord
+class GeoCityAlias extends ActiveRecord
 {
     use \mootensai\relation\RelationTrait;
 
@@ -21,11 +21,11 @@ class GeoCityAlias extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return [
+        return array_merge(parent::rules(),[
             [['alias', 'city_id'], 'required'],
             [['city_id'], 'integer'],
             [['alias'], 'string', 'max' => 100],
-        ];
+        ]);
     }
     
     /**
@@ -41,11 +41,11 @@ class GeoCityAlias extends \yii\db\ActiveRecord
      */
     public function attributeLabels()
     {
-        return [
+        return array_merge(parent::attributeLabels(),[
             'id' => Yii::t('geo', 'ID'),
             'alias' => Yii::t('geo', 'Alias'),
             'city_id' => Yii::t('geo', 'City ID'),
-        ];
+        ]);
     }
 
 /**
