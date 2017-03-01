@@ -2,13 +2,14 @@
 
 namespace derekisbusy\geo\frontend\modules\geo\controllers;
 
+use derekisbusy\geo\models\base\ActiveRecord;
 use derekisbusy\geo\models\GeoCity;
 use derekisbusy\geo\models\GeoCityAliasSearch;
 use derekisbusy\geo\models\GeoCounty;
 use derekisbusy\geo\models\GeoState;
 use derekisbusy\geo\models\GeoStateSearch;
-use yii\web\Controller;
 use Yii;
+use yii\web\Controller;
 
 /**
  * Default controller for the `geo` module
@@ -31,9 +32,10 @@ class DefaultController extends Controller
             throw new \yii\web\NotFoundHttpException(Yii::t('common', 'The page could not be found.'));
         }
         $searchModel = new GeoCityAliasSearch;
-        $searchModel->state_id = $state->id;
-        $searchModel->city_status = \derekisbusy\geo\models\base\ActiveRecord::STATUS_ACTIVE;
-        $searchModel->county_status = \derekisbusy\geo\models\base\ActiveRecord::STATUS_ACTIVE;
+        $searchModel->state = $state->id;
+        $searchModel->status = ActiveRecord::STATUS_ACTIVE;
+        $searchModel->city_status = ActiveRecord::STATUS_ACTIVE;
+        $searchModel->county_status = ActiveRecord::STATUS_ACTIVE;
         $request = \Yii::$app->request;
         $dataProvider = $searchModel->search($request->getQueryParams());
         return $this->render('state',['dataProvider'=>$dataProvider,'searchModel'=>$searchModel, 'state' => $state]);
