@@ -71,7 +71,6 @@ use derekisbusy\geo\models\GeoCityAlias;
         $query->with('city.county');
         
         
-        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);

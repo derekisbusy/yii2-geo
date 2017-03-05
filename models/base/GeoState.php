@@ -2,11 +2,7 @@
 
 namespace derekisbusy\geo\models\base;
 
-use derekisbusy\geo\models\base\ActiveRecord;
-use derekisbusy\geo\models\GeoCity;
-use derekisbusy\geo\models\GeoCounty;
 use derekisbusy\geo\models\GeoStateQuery;
-use derekisbusy\geo\models\GeoZip;
 use Yii;
 
 /**
