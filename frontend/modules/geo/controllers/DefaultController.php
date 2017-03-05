@@ -4,6 +4,7 @@ namespace derekisbusy\geo\frontend\modules\geo\controllers;
 
 use derekisbusy\geo\models\base\ActiveRecord;
 use derekisbusy\geo\models\GeoCity;
+use derekisbusy\geo\models\GeoCityAlias;
 use derekisbusy\geo\models\GeoCityAliasSearch;
 use derekisbusy\geo\models\GeoCounty;
 use derekisbusy\geo\models\GeoState;
@@ -38,6 +39,7 @@ class DefaultController extends Controller
         $searchModel->county_status = ActiveRecord::STATUS_ACTIVE;
         $request = \Yii::$app->request;
         $dataProvider = $searchModel->search($request->getQueryParams());
+        $dataProvider->query->groupBy(GeoCityAlias::tableName().'.alias');
         return $this->render('state',['dataProvider'=>$dataProvider,'searchModel'=>$searchModel, 'state' => $state]);
     }
     
