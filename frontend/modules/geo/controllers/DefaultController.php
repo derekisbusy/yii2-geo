@@ -39,7 +39,8 @@ class DefaultController extends Controller
         $searchModel->county_status = ActiveRecord::STATUS_ACTIVE;
         $request = \Yii::$app->request;
         $dataProvider = $searchModel->search($request->getQueryParams());
-        $dataProvider->query->groupBy(GeoCityAlias::tableName().'.alias');
+        $dataProvider->query->addGroupBy(GeoCityAlias::tableName().'.id');
+        $dataProvider->query->addGroupBy(GeoCityAlias::tableName().'.alias');
         return $this->render('state',['dataProvider'=>$dataProvider,'searchModel'=>$searchModel, 'state' => $state]);
     }
     
