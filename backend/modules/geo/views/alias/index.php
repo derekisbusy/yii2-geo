@@ -104,6 +104,9 @@ $columns = [
     [
         'attribute' => 'status',
         'value' => function($model){
+            if (!$model->status) {
+                return null;
+            }
             return '<span class="label label-'.GeoCityAlias::getStatusLabelTypes()[$model->status].'">' . GeoCityAlias::getStatusOptions()[$model->status] . '</span>';
         },
         'format' => 'raw',
