@@ -5,7 +5,7 @@ namespace derekisbusy\geo\backend\modules\geo;
 /**
  * geo module definition class
  */
-class Module extends \yii\base\Module
+class Module extends \derekisbusy\geo\BaseModule
 {
     /**
      * @inheritdoc
