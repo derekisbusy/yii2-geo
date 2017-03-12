@@ -2,6 +2,7 @@
 
 namespace derekisbusy\geo\frontend\modules\geo\controllers;
 
+use derekisbusy\geo\frontend\modules\geo\Module;
 use derekisbusy\geo\models\base\ActiveRecord;
 use derekisbusy\geo\models\GeoCity;
 use derekisbusy\geo\models\GeoCityAlias;
@@ -22,7 +23,7 @@ class DefaultController extends Controller
         $searchModel = new GeoStateSearch;
         $searchModel->status = GeoState::STATUS_ACTIVE;
         $dataProvider = $searchModel->search(\Yii::$app->request->getQueryParams());
-        return $this->render('index',['dataProvider'=>$dataProvider,'searchModel'=>$searchModel]);
+        return $this->render($this->module->viewSettings[Module::VIEW_INDEX],['dataProvider'=>$dataProvider,'searchModel'=>$searchModel]);
     }
     
     public function actionState($stateCode, $stateName)
@@ -41,7 +42,7 @@ class DefaultController extends Controller
         $dataProvider = $searchModel->search($request->getQueryParams());
         $dataProvider->query->addGroupBy(GeoCityAlias::tableName().'.id');
         $dataProvider->query->addGroupBy(GeoCityAlias::tableName().'.alias');
-        return $this->render('state',['dataProvider'=>$dataProvider,'searchModel'=>$searchModel, 'state' => $state]);
+        return $this->render($this->module->viewSettings[Module::VIEW_STATE],['dataProvider'=>$dataProvider,'searchModel'=>$searchModel, 'state' => $state]);
     }
     
     public function actionCity($stateCode, $stateName, $cityName)
@@ -51,7 +52,7 @@ class DefaultController extends Controller
         if ($city === null) {
             throw new \yii\web\NotFoundHttpException(Yii::t('common', 'The page could not be found.'));
         }
-        return $this->render('city',array('city'=>$city));
+        return $this->render($this->module->viewSettings[Module::VIEW_CITY],array('city'=>$city));
     }
     
     public function actionCounty($stateCode, $stateName, $countyName)
@@ -62,6 +63,6 @@ class DefaultController extends Controller
         if ($county === null) {
             throw new \yii\web\NotFoundHttpException(Yii::t('common', 'The page could not be found.'));
         }
-        return $this->render('county',array('county'=>$county));
+        return $this->render($this->module->viewSettings[Module::VIEW_COUNTY],array('county'=>$county));
     }
 }
