@@ -4,6 +4,10 @@ namespace derekisbusy\geo\models\base;
 
 use Yii;
 
+if (!defined('YII2_GEO_MODULE')) {
+    define('YII2_GEO_MODULE', 'geo');
+}
+
 /**
  * This is the base model class for all other base model classes.
  *
@@ -20,6 +24,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 2;
+    
+    public static $db;
     
     /**
      * @inheritdoc
@@ -57,5 +63,24 @@ class ActiveRecord extends \yii\db\ActiveRecord
             self::STATUS_INACTIVE => 'default',
             self::STATUS_DELETED => 'danger',
         ];
+    }
+    
+    
+    public static function getDb()
+    {
+        if (self::$db instanceof yii\db\Connection) {
+             return self::$db;
+        } else if (isset(Yii::$app)) {
+            $db = Yii::$app->getModule(YII2_GEO_MODULE)->db;
+            return Yii::$app->{$db};
+        } else if (defined('YII2_GEO_DB')) {
+            return YII2_GEO_DB;
+        } else {
+            throw new \Exception("Database object not set!");
+        }
+    }
+    
+    public function setDb($db) {
+        self::$db = $db;
     }
 }
