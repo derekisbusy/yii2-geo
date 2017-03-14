@@ -20,7 +20,7 @@ use Yii;
  */
 class GeoCity extends ActiveRecord
 {
-
+    
     public function __toString()
     {
         return $this->city;
@@ -62,7 +62,7 @@ class GeoCity extends ActiveRecord
     public function beforeValidate()
     {
         if ($this->county_id) {
-            $county = \derekisbusy\geo\models\base\GeoCounty::findOne($this->county_id);
+            $county = GeoCounty::findOne($this->county_id);
             $this->state_id = $county->state_id;
         }
         return parent::beforeValidate();
