@@ -80,12 +80,12 @@ use derekisbusy\geo\models\GeoCityAlias;
             'desc' => [GeoState::tableName().'.state' => SORT_DESC],
         ];
         $dataProvider->sort->attributes['county'] = [
-            'asc' => [GeoState::tableName().'.county' => SORT_ASC],
-            'desc' => [GeoState::tableName().'.county' => SORT_DESC],
+            'asc' => [GeoCounty::tableName().'.county' => SORT_ASC],
+            'desc' => [GeoCounty::tableName().'.county' => SORT_DESC],
         ];
         $dataProvider->sort->attributes['city'] = [
-            'asc' => [GeoState::tableName().'.city' => SORT_ASC],
-            'desc' => [GeoState::tableName().'.city' => SORT_DESC],
+            'asc' => [GeoCity::tableName().'.city' => SORT_ASC],
+            'desc' => [GeoCity::tableName().'.city' => SORT_DESC],
         ];
         
         $this->load($params);
