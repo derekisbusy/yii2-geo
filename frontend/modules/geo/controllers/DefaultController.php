@@ -42,13 +42,13 @@ class DefaultController extends Controller
         $dataProvider = $searchModel->search($request->getQueryParams());
         $dataProvider->query->addGroupBy(GeoCityAlias::tableName().'.id');
         $dataProvider->query->addGroupBy(GeoCityAlias::tableName().'.alias');
-        return $this->render($this->module->viewSettings[Module::VIEW_STATE],['dataProvider'=>$dataProvider,'searchModel'=>$searchModel, 'state' => $state]);
+        return $this->render($this->module->viewSettings[Module::VIEW_STATE], ['dataProvider' => $dataProvider, 'searchModel' => $searchModel, 'state' => $state]);
     }
     
     public function actionCity($stateCode, $stateName, $cityName)
     {
         $cityName = str_replace('_',' ',$cityName);
-        $city = GeoCity::find()->withState()->active()->where(['LIKE','city',$cityName])->andWhere(['state_code' => $stateCode, 'state' => $stateName])->one();
+        $city = GeoCity::find()->withState()->active()->where(['LIKE', 'city', $cityName, false])->andWhere(['state_code' => $stateCode, 'state' => $stateName])->one();
         if ($city === null) {
             throw new \yii\web\NotFoundHttpException(Yii::t('common', 'The page could not be found.'));
         }
