@@ -29,7 +29,7 @@ class DefaultController extends Controller
     public function actionState($stateCode, $stateName)
     {
         $stateName = str_replace('_',' ',$stateName);
-        $state = GeoState::find()->where(['LIKE','state', $stateName])->andWhere(['state_code' => $stateCode])->one();
+        $state = GeoState::find()->where(['LIKE','state', $stateName, false])->andWhere(['state_code' => $stateCode])->one();
         if ($state === null) {
             throw new \yii\web\NotFoundHttpException(Yii::t('common', 'The page could not be found.'));
         }
@@ -59,7 +59,7 @@ class DefaultController extends Controller
     {
         $countyName = str_replace('_county','',$countyName);
         $countyName = str_replace('_',' ',$countyName);
-        $county = GeoCounty::find()->withState()->active()->where(['LIKE','county',$countyName])->andWhere(['state_code' => $stateCode, 'state' => $stateName])->one();
+        $county = GeoCounty::find()->withState()->active()->where(['LIKE','county',$countyName, false])->andWhere(['state_code' => $stateCode, 'state' => $stateName])->one();
         if ($county === null) {
             throw new \yii\web\NotFoundHttpException(Yii::t('common', 'The page could not be found.'));
         }
