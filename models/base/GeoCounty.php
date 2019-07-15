@@ -100,6 +100,11 @@ class GeoCounty extends \yii\db\ActiveRecord
         return self::findOne($county_id)->county;
     }
     
+    public static function getCountyNameById($county_id)
+    {
+        return self::getCountyName($county_id);
+    }
+    
     public static function getStatusOptions()
     {
         return [
