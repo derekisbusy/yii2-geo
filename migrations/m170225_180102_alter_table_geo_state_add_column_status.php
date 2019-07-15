@@ -13,6 +13,11 @@ class m170225_180102_alter_table_geo_state_add_column_status extends \yii\db\Mig
         
         $this->addColumn(
                 GeoState::tableName(), 
+                'adjective', 
+                $this->string(64)->defaultValue('')->after('state_code'));
+        
+        $this->addColumn(
+                GeoState::tableName(), 
                 'status', 
                 $this->integer(1)->notNull()->defaultValue(1)->after('adjective'));
                 
