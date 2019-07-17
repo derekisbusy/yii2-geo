@@ -33,7 +33,7 @@ and run the following command:
 $ php yii migrate/up --migrationPath=@vendor/derekisbusy/yii2-geo/migrations
 ```
 
- Since there are lots of records in the migrations you may need to temporarily remove the memory limit in your index.php by adding the following. 
+ Since there are lots of records in the migrations you may need to temporarily remove the memory limit in your `yii` file by adding the following. 
 
 ```php
 php_ini('memory_limit', '-1');
